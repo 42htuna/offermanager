@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+{% if error_message %}
+<div class="alert alert-danger">{{ error_message }}</div>
+{% endif %}
+
+{% if offer %}
+<!-- Display offer -->
+<h2 class="text-center">{% trans 'Offer' %} {{ offer.id }}</h2>
+
+<!-- Customer information -->
+<form method="POST" action="{% url 'update_offer' offer.id %}" name="customer" class="form-default">
+	{% csrf_token %}
+	<div class="card card-primary">
+		<div class="card-header text-center">{% trans 'Customer' %}</div>
+		<div class="card-body">
+		<div class="form-row">
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Customer : ' %}</label>
+				<div class="col-sm-12">
+					<p class="form-control-static"><a href="{% url 'customer' offer.customer.id %}">{{ offer.customer }}</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Date : ' %}</label>
+				<div class="col-sm-12">
+					<input type="text" class="form-control" name="date" id="offerdate" required="required" value="{{ offer.date|date:'d/m/Y' }}">
+				</div>
+				<script type="text/javascript">
+					$(function () {
+						$('#offerdate').datepicker({
+							format: "dd/mm/yyyy",
+							orientation: "bottom left",
+							weekStart: 1,
+							todayBtn: "linked",
+							clearBtn: true,
+							language: "tr",
+							daysOfWeekHighlighted: "0,6",
+							calendarWeeks: true,
+							todayHighlight: true,
+							toggleActive: true,
+							autoclose: true,
+						});
+					});
+					</script>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Status : ' %}</label>
+				<div class="col-sm-12">
+					<select name="status" class="form-control">
+						<option value='0' {% if offer.draft %}selected{% endif %}>{% trans 'Draft' %}</option>
+						<option value='1' {% if offer.approved %}selected{% endif %}>{% trans 'Approved' %}</option>
+						<option value='2' {% if offer.unapproved %}selected{% endif %}>{% trans 'Unapproved' %}</option>
+						<option value='3' {% if offer.cancel %}selected{% endif %}>{% trans 'Cancel' %}</option>
+					<select>
+				</div>
+			</div>
+		</div>
+		</div>
+			<div class="form-group">
+				<label class="col-sm-9 control-label">{% trans 'Terms : ' %}</label>
+				<div class="col-sm-12">
+					<textarea class="form-control" name="terms" rows="3">{{ offer.terms }}</textarea>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer text-center">
+			<input class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Save' %}">
+			<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'print_offer' offer.id %}" target="_new">{% trans 'Printable Offer' %}</a>
+			<button type="button" data-toggle="modal" data-target="#confirmpassive" data-object-name="{{ offer.id }}" data-delete-url="{% url 'passive_offer' offer.id %}" class="btn btn-outline-warning my-2 my-sm-0 btn-sm">{% trans 'Passive' %}</button>
+			<button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ offer.id }}" data-delete-url="{% url 'delete_offer' offer.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
+		</div>
+	</div>
+</form>&nbsp;
+<!-- END Customer information -->
+
+<!-- Offer items -->
+<form action="{% url 'add_item' offer.id %}" method="post" class="form-inline">
+	{% csrf_token %}
+	<div class="card card-primary">
+		<div class="card-header">{% trans 'Offer items' %}</div>
+		<div class="table-responsive-sm">
+		<table class="table table-sm text-right">
+			<tr>
+				<th class="text-left">No</th>
+				<th class="text-left">{% trans 'Type' %}</th>
+				<th>{% trans 'Qty' %}</th>
+				<th class="text-center">{% trans 'Unit' %}</th>
+				<th>{% trans 'Cost' %}</th>
+				<th class="text-center">{% trans 'Tax' %}</th>
+				<th>{% trans 'Total' %}</th>
+				<th>{% trans 'Actions' %}</th>
+			</tr>
+			{% for item in offer.offeritem_set.all %}
+			<tr>
+				<td class="text-left">{{ forloop.counter }}</td>
+				<td class="text-left" >{{ item.type }}</td>
+				<td>{{ item.qty }}</td>
+				<td class="text-center">{{ item.unit }}</td>
+				<td>{{ item.cost }} TL</td>
+				<td class="text-center">%{{ item.tax }}</td>
+				<td>{{ item.total }} TL</td>
+				<td>
+					<button type="button" class="btn btn-xs btn-outline-danger my-2 my-sm-0 btn-sm" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ item.type }}" data-delete-url="{% url 'delete_item' offer.id item.id %}">{% trans 'Delete' %}</button>
+				</td>
+			</tr>
+			{% endfor %}
+			<tr>
+				<td style="width: 3%;"></td>
+				<td style="width: 49%;"><div class="input-group"><input type="text" name="type" required="required" class="form-control form-control-sm"></td></div>
+				<td style="width: 11%;"><div class="input-group"><input type="number" style="direction: rtl" step="any" name="qty" class="form-control form-control-sm" value=1.00></td></div>
+				<td style="width: 7%;">
+					<select name="unit" class="form-control form-control-sm">
+						<option value=''>----</option>
+						<option value='AD'>AD</option>
+						<option value='M2'>M2</option>
+						<option value='M3'>M3</option>
+						<option value='KG'>KG</option>
+					<select>
+				</td>
+				<td style="width: 9%;">
+					<div class="input-group"><input type="number" style="direction: rtl" name="cost" step="any" class="form-control form-control-sm" value=0.0000 /></div>
+				</td>
+				<td class="text-center" style="width: 7%;">
+					<div class="input-group"><input type="number" style="direction: rtl" step="any" name="tax" class="form-control form-control-sm" value=18 ></div>
+				</td>
+				<td style="width: 14%;"></td>
+				<td class="text-right">
+					<input type="submit" class="btn btn-outline-primary my-2 my-sm-0 btn-sm" value={% trans 'Add' %}>
+				</td>
+			</tr>
+		</table>
+	</div>
+		<div class="card-footer text-right">
+			<div class="row">
+				<div class="col-sm-9"><strong>{% trans 'Sub Total : ' %}</strong></div>
+				<div class="col-sm-3"><strong>{{ offer.total_items }} TL</strong></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-9"><strong>{% trans 'Tax Total : ' %}</strong></div>
+				<div class="col-sm-3"><strong>{{ offer.total_tax }} TL</strong></div>
+			</div>
+			<div class="row">
+				<div class="col-sm-9"><strong>{% trans 'General Total : ' %}</strong></div>
+				<div class="col-sm-3"><strong>{{ offer.total }} TL</strong></div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<!-- Passive confirmation modal -->
+<div class="modal fade" id="confirmpassive" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#confirmpassive').on('show.bs.modal', function(e) {
+			var name = $(e.relatedTarget).data('object-name');
+			var url = $(e.relatedTarget).data('delete-url');
+			$('#confirmpassive .modal-body').text("{% trans 'Are you sure you want to passive? ' %}" + name);
+			$('#confirmpassive .modal-footer a').attr('href', url);
+		});
+	});
+</script>
+<!-- END passive confirmation modal -->
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="confirmdelete" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#confirmdelete').on('show.bs.modal', function(e) {
+			var name = $(e.relatedTarget).data('object-name');
+			var url = $(e.relatedTarget).data('delete-url');
+			$('#confirmdelete .modal-body').text("{% trans 'Are you sure you want to delete? ' %}" + name);
+			$('#confirmdelete .modal-footer a').attr('href', url);
+		});
+	});
+</script>
+<!-- END delete confirmation modal -->
+
+{% if confirm_update %}
+<!-- Update success modal -->
+<div class="modal fade" id="updateconfirm" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+			<h4>{% trans 'Changes saved!' %}</h4>
+        </div>
+        <div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn btn-primary">{% trans 'Ok' %}</a>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Trigger success confirmation modal -->
+<script>
+$(document).ready(function(){
+	$("#updateconfirm").modal();
+});
+</script>
+<!-- End success confirmation modal -->
+{% endif %}
+<!-- End display offer -->
+
+{% else %}
+<!-- Display Offer error -->
+<div class="alert alert-warning">{% trans 'Offer number not found!' %}</div>
+<!-- End display Offer error -->
+
+{% endif %}
+
+{% endblock %}

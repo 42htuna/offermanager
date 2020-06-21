@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+{% if error_message %}
+<div class="danger">{{ error_message }}</div>
+{% endif %}
+
+{% if customer %}
+<!-- Customer information -->
+<form method="POST" action="{% url 'update_customer' customer.id %}" name="customer" class="form-default">
+	{% csrf_token %}
+	<div class="card card-primary">
+		<div class="card-header text-center">{% trans 'Customer Info' %}</div>
+		<div class="card-body">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'ID : ' %} {{ customer.id }}</label>
+			</div>
+			<div class="form-row">
+			<div class="col-sm-6">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Customer Name : ' %}</label>
+				<div class="col-sm-12">
+					<input type="text" class="form-control" name="name" value="{{ customer.name }}"/>
+				</div>
+			</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label class="col-sm-12 control-label">{% trans 'Phone : ' %}</label>
+					<div class="col-sm-12">
+						<input type="text" class="form-control" name="phone" value="{{ customer.phone }}" />
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Address : ' %}</label>
+				<div class="col-sm-12">
+					<textarea type="text" class="form-control" name="address" rows="3">{{ customer.address }}</textarea>
+				</div>
+			</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group">
+					<label class="col-sm-12 control-label">{% trans 'E Mail : ' %}</label>
+					<div class="col-sm-12">
+						<input type="text" class="form-control" name="email" value="{{ customer.email }}" />
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		<div class="card-footer text-center">
+			<input  class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Update' %}">
+			<a class="btn btn-outline-secondary my-2 my-sm-0 btn-sm" href="mailto:{{ customer.email }}">{% trans 'Send E-mail' %}</a>
+			<button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ customer.name }}" data-delete-url="{% url 'delete_customer' customer.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
+		</div>
+	</div>
+</form>
+<!-- END Customer information -->
+
+<h2 class="text-center">{{ customer.name }}</h2>
+
+<!-- Customer offers -->
+<div class="card card-primary">
+	<div class="card-header">{% trans 'Customer Offers' %}</div>
+	<div class="table-responsive-sm">
+	<table class="table table-sm text-right">
+		<tr class="table-default">
+			<th class="text-left">ID</th>
+			<th class="text-center">{% trans 'Date' %}</th>
+			<th>{% trans 'Sub Total' %}</th>
+			<th>{% trans 'Tax Total' %}</th>
+			<th>{% trans 'General Total' %}</th>
+			<th>{% trans 'Actions' %}</th>
+		</tr>
+	{% for offer in offers %}
+		<tr>
+			<td class="text-left">{{ offer.id }}</td>
+			<td class="text-center">{{ offer.date|date:"DATE_FORMAT" }}</td>
+			<td>{{ offer.total_items }} TL</td>
+			<td>{{ offer.total_tax }} TL</td>
+			<td>{{ offer.total }} TL</td>
+			<td>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'offer' offer.id %}" target="new">{% trans 'View' %}</a>
+				<button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ offer.id }}" data-delete-url="{% url 'delete_offer' offer.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
+			</td>
+		</tr>
+	{% endfor %}
+	</div>
+	</table>
+</div>
+
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="confirmdelete" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#confirmdelete').on('show.bs.modal', function(e) {
+			var name = $(e.relatedTarget).data('object-name');
+			var url = $(e.relatedTarget).data('delete-url');
+			$('#confirmdelete .modal-body').html("{% trans 'Are you sure you want to delete offer? ' %}" + name + "<br><i>{% trans 'This will delete all associated items!' %}</i>");
+			$('#confirmdelete .modal-footer a').attr('href', url);
+		});
+	});
+</script>
+<!-- END delete confirmation modal -->
+
+<!-- End display customer -->
+{% endif %}
+
+{% endblock %}
