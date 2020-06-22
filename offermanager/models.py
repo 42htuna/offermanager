@@ -91,7 +91,8 @@ class Offer(models.Model):
 
     def employee(self):
         o = Offer.objects.get(pk=self.id)
-        e = Employee.objects.get(pk=o.id)
+        a = User.objects.get(pk=o.created_by.id)
+        e = Employee.objects.get(user_id=a)
         return e
 
     def total_items(self):
