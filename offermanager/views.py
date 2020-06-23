@@ -115,7 +115,7 @@ def offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
     context = {
 		'title' : _('Offer ') + str(offer_id),
-	    'offer' : offer,
+	    	'offer' : offer,
 	}
     return render(request, 'offer.html', context)
 
