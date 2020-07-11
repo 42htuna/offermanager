@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from offermanager.cevirici import *
 
 # Create your models here.
 STATUS_CHOICES = [('0', _('Draft')),
@@ -112,6 +113,13 @@ class Offer(models.Model):
     def total_(self):
         total = self.total_items_() + self.total_tax_()
         return round(total, 2)
+        
+    def yaziyla(self):
+        a = str(self.total_()).split('.')
+        lira = Cevirici(a[0])
+        kurus = Cevirici(a[1])
+        yaziyla = "Teklif tutarı yalnız : %s TL %s KR'dir." %(lira.yaz, kurus.yaz)
+        return yaziyla
 
     def total_items(self):
         return "{:,}".format(self.total_items_())
@@ -120,7 +128,7 @@ class Offer(models.Model):
         return "{:,}".format(self.total_tax_())
 
     def total(self):
-        return "{:,}".format(self.total_())
+        return "{:,}".format(self.total_())    
 
     def status_offer(self):
         if '1' not in self.status:
