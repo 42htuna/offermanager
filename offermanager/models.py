@@ -116,10 +116,14 @@ class Offer(models.Model):
         
     def yaziyla(self):
         a = str(self.total_()).split('.')
-        lira = Cevirici(a[0])
-        kurus = Cevirici(a[1])
-        yaziyla = "Teklif tutarı yalnız : %s TL %s KR'dir." %(lira.yaz, kurus.yaz)
-        return yaziyla
+        try:
+            lira = Cevirici(a[0])
+            kurus = Cevirici(a[1])
+            yaziyla = "Yalnız : %s TL %s KR'dir." %(lira.yaz, kurus.yaz)
+            return yaziyla
+        except:
+            yaziyla = "Yalnız : Sıfır TL Sıfır KR'dir."
+            return yaziyla
 
     def total_items(self):
         return "{:,}".format(self.total_items_())
