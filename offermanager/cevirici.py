@@ -45,4 +45,3 @@ class Cevirici:
             else:
                 oku = birler[sayi[0]]+yuz[0]+onlar[sayi[1]]+birler[sayi[2]]
                 return oku
-                
