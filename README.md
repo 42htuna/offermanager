@@ -62,6 +62,23 @@ Superuser created successfully.
 /opt/offermanager$ sudo python3 manage.py runserver 0.0.0.0:8000
 ```
 
+9. Setting DEBUG
+```settings.py
+DEBUG = false
+```
+
+Add "--insecure" for access of static files
+```bash
+/opt/offermanager$ sudo python3 manage.py runserver 0.0.0.0:8000 --insecure
+```
+
+10. Setting ALLOWED_HOSTS
+```settings.py
+ALLOWED_HOSTS = ['127.0.0.1','localhost',]
+ALLOWED_HOSTS += ['192.168.1.{}'.format(i) for i in range(256)]
+#ALLOWED_HOSTS += ['192.168.{}.{}'.format(i,j) for i in range(256) for j in range(256)]
+```
+
 ### Using MySQL instead of SQLite3
 1. Install MySQL client and Python MySQL driver
 ```bash
