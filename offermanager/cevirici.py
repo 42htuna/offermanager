@@ -21,10 +21,10 @@ class Cevirici:
         for i in range(int(kacYuzlerVar)):
             if sayi[-1*((i*3)+3)]+sayi[-1*((i*3)+2)]+sayi[-1*((i*3)+1)] == "000":
                 oku = oku
-            elif sayi[-1*((i*3)+3)]+sayi[-1*((i*3)+2)]+sayi[-1*((i*3)+1)] == "001" and len(sayi) == 6:
-                oku = ucluGrub[str(i)] + oku
             else:
                 oku = self.ucHaneOku(sayi[-1*((i*3)+3)]+sayi[-1*((i*3)+2)]+sayi[-1*((i*3)+1)]) + ucluGrub[str(i)] + oku
+                if oku.find("BirBin") == 0:
+                    oku = oku[3:]
 
         if oku == "":
             oku = "Sıfır"
