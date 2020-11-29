@@ -155,7 +155,7 @@ class Offer(models.Model):
         return self.status == '3'
 
 class OfferItem(models.Model):
-    UnitType = models.TextChoices('UnitType', 'AD M2 M3 KG')
+    UnitType = models.TextChoices('UnitType', 'AD PK KT TK GR KG ML CL LT MM CM MT KM M2 M3')
     offer = models.ForeignKey(Offer,
                               on_delete=models.CASCADE)
     type = models.CharField(_('Type'), max_length=64)
