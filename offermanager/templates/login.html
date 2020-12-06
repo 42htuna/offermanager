@@ -2,6 +2,10 @@
 {% load i18n %}
 {% block content %}
 
+{% if error_message %}
+<div class="alert alert-info">{{ error_message }}</div>
+{% endif %}
+
 <form class="form-default" action="{% url 'login' %}" method="POST">
 {% csrf_token %}
 	<div class="card card-primary">

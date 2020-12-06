@@ -165,6 +165,7 @@
 		</div>
 	</div>
 </form>
+<!-- End offer items -->
 
 <!-- Passive confirmation modal -->
 <div class="modal fade" id="confirmpassive" role="dialog">
@@ -278,13 +279,14 @@ $(document).ready(function(){
 });
 </script>
 <!-- End success confirmation modal -->
+
 {% endif %}
 <!-- End display offer -->
 
 {% else %}
-<!-- Display Offer error -->
-<div class="alert alert-warning">{% trans 'Offer number not found!' %}</div>
-<!-- End display Offer error -->
+<!-- Display offer error -->
+<div class="alert alert-info">{% trans 'Offer number not found!' %}</div>
+<!-- End display offer error -->
 
 {% endif %}
 

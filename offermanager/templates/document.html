@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+{% if error_message %}
+<div class="alert alert-danger">{{ error_message }}</div>
+{% endif %}
+
+{% if document %}
+<!-- Display document -->
+<h2 class="text-center">{% trans 'Document' %} {{ document.id }}</h2>
+
+<!-- Customer information -->
+<form method="POST" action="{% url 'update_document' document.id %}" name="customer" class="form-default">
+	{% csrf_token %}
+	<div class="card card-primary">
+		<div class="card-header text-center">{% trans 'Customer' %}</div>
+		<div class="card-body">
+		<div class="form-row">
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Customer : ' %}</label>
+				<div class="col-sm-12">
+					<p class="form-control-static"><a href="{% url 'customer' document.customer.id %}">{{ document.customer }}</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Date : ' %}</label>
+				<div class="col-sm-12">
+					<input type="text" class="form-control" name="date" id="documentdate" required="required" value="{{ document.date|date:'d/m/Y' }}">
+				</div>
+				<script type="text/javascript">
+					$(function () {
+						$('#documentdate').datepicker({
+							format: "dd/mm/yyyy",
+							orientation: "bottom left",
+							weekStart: 1,
+							todayBtn: "linked",
+							clearBtn: true,
+							language: "tr",
+							daysOfWeekHighlighted: "0,6",
+							calendarWeeks: true,
+							todayHighlight: true,
+							toggleActive: true,
+							autoclose: true,
+						});
+					});
+					</script>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Document Type : ' %}</label>
+				<div class="col-sm-12">
+					<select name="documenttype" class="form-control">
+						<option value='0' {% if document.cheque %}selected{% endif %}>{% trans 'Cheque' %}</option>
+						<option value='1' {% if document.bond %}selected{% endif %}>{% trans 'Bond' %}</option>
+						<option value='2' {% if document.receipt %}selected{% endif %}>{% trans 'Receipt' %}</option>
+						<option value='3' {% if document.other %}selected{% endif %}>{% trans 'Other' %}</option>
+					<select>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="col-sm-12 control-label">{% trans 'Amount : ' %}</label>
+				<div class="col-sm-12">
+					<input type="text" class="form-control" name="amount" required="required" value={{ document.amount }}>
+				</div>
+			</div>
+		</div>
+		</div>
+			<div class="form-group">
+				<label class="col-sm-9 control-label">{% trans 'Description : ' %}</label>
+				<div class="col-sm-12">
+					<textarea class="form-control" name="description" rows="3">{{ document.description }}</textarea>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer text-center">
+			<input class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Save' %}">
+			<button type="button" data-toggle="modal" data-target="#confirmdocumentdelete" data-object-name="{{ document.id }}" data-delete-url="{% url 'delete_document' document.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
+		</div>
+	</div>
+</form>&nbsp;
+<!-- END Customer information -->
+
+<!-- Document Attachments -->
+<form action="{% url 'upload_document_attachment' document.id %}" method="post" enctype="multipart/form-data" class="form-inline">
+	{% csrf_token %}
+	<div  style="width: 1150px;" class="card card-primary">
+		<div class="card-header text-center">{% trans 'Document Attachments' %}</div
+		<div class="table-responsive-sm">
+		<table class="table table-sm text-right">
+			<tr>
+				<th class="text-left">No</th>
+				<th class="text-left">{% trans 'File' %}</th>
+				<th class="text-right">{% trans 'Actions' %}</th>
+			</tr>
+		{% for attachment in document.documentattachment_set.all %}
+			<tr>
+				<td style="width: 40px;" class="text-left">{{ forloop.counter }}</td>
+				<td class="text-left"><a href="{{ attachment.file.url }}"  target="_new">{{ attachment.displayname }}</a></td>
+				<td>
+					<button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ attachment.displayname }}" data-delete-url="{% url 'delete_document_attachment' document.id attachment.id %}" class="btn btn-xs btn-danger">{% trans 'Delete' %}</button>
+				</td>
+			</tr>
+		{% endfor %}
+			<tr>
+				<td><br>
+					<input type="file" class="file col-sm-12" name="file" id="file" data-show-preview="false">
+				</td>
+				<td></td>
+				<td style="width: 1150px;" class="text-right"><br>
+					<input type="submit" class="btn btn-outline-primary my-2 my-sm-0 btn-sm" value={% trans 'Upload' %}>
+				</td>
+			</tr>
+			</table>
+		</div>
+		</div>
+	</div>
+</form>
+<!-- End document Attachments -->
+
+<!-- Delete document confirmation modal -->
+<div class="modal fade" id="confirmdocumentdelete" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#confirmdocumentdelete').on('show.bs.modal', function(e) {
+			var name = $(e.relatedTarget).data('object-name');
+			var url = $(e.relatedTarget).data('delete-url');
+			$('#confirmdocumentdelete .modal-body').html("{% trans 'Are you sure you want to delete document? ' %}" + name + "<br><i>{% trans 'This will delete all associated items!' %}</i>");
+			$('#confirmdocumentdelete .modal-footer a').attr('href', url);
+		});
+	});
+</script>
+<!-- END delete document confirmation modal -->
+
+<!-- Delete document attachment confirmation modal -->
+<div class="modal fade" id="confirmdelete" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#confirmdelete').on('show.bs.modal', function(e) {
+			var name = $(e.relatedTarget).data('object-name');
+			var url = $(e.relatedTarget).data('delete-url');
+			$('#confirmdelete .modal-body').html(name + "{% trans ' Are you sure you want to delete document attachment?' %}");
+			$('#confirmdelete .modal-footer a').attr('href', url);
+		});
+	});
+</script>
+<!-- END delete document attachment confirmation modal -->
+
+{% if confirm_update %}
+<!-- Update success modal -->
+<div class="modal fade" id="updateconfirm" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-body">
+			<h4>{% trans 'Changes saved!' %}</h4>
+        </div>
+        <div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn btn-primary">{% trans 'Ok' %}</a>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Trigger success confirmation modal -->
+<script>
+$(document).ready(function(){
+	$("#updateconfirm").modal();
+});
+</script>
+<!-- End success confirmation modal -->
+
+{% endif %}
+<!-- End display document -->
+
+{% else %}
+<!-- Display document error -->
+<div class="alert alert-info">{% trans 'Document number not found!' %}</div>
+<!-- End display document error -->
+
+{% endif %}
+
+{% endblock %}

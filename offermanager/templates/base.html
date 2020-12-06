@@ -42,13 +42,26 @@
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Offers' %}<span class="sr-only">(current)</span></a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="{% url 'new_offer' %}">{% trans 'New Offer' %}</a>
-							<a class="dropdown-item" href="{% url 'index' %}">{% trans 'Recent' %}</a>
+							<a class="dropdown-item" href="{% url 'index' %}">{% trans 'Recent Offers' %}</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="{% url 'all_offers' %}">{% trans 'List All' %}</a>
+							<a class="dropdown-item" href="{% url 'all_offers' %}">{% trans 'List All Offers' %}</a>
 							<a class="dropdown-item" href="{% url 'draft_offers' %}">{% trans 'Draft Offers' %}</a>
 							<a class="dropdown-item" href="{% url 'approved_offers' %}">{% trans 'Approved Offers' %}</a>
 							<a class="dropdown-item" href="{% url 'unapproved_offers' %}">{% trans 'Unapproved Offers' %}</a>
 							<a class="dropdown-item" href="{% url 'canceled_offers' %}">{% trans 'Canceled Offers' %}</a>
+						</div>
+				</li>
+				<li class="nav-item dropdown active">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans 'Documents' %}<span class="sr-only">(current)</span></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="{% url 'new_document' %}">{% trans 'New Document' %}</a>
+							<a class="dropdown-item" href="{% url 'recent_documents' %}">{% trans 'Recent Documents' %}</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{% url 'all_documents' %}">{% trans 'List All Documents' %}</a>
+							<a class="dropdown-item" href="{% url 'cheques' %}">{% trans 'Cheques' %}</a>
+							<a class="dropdown-item" href="{% url 'bonds' %}">{% trans 'Bonds' %}</a>
+							<a class="dropdown-item" href="{% url 'receipts' %}">{% trans 'Receipts' %}</a>
+							<a class="dropdown-item" href="{% url 'others' %}">{% trans 'Others' %}</a>
 						</div>
 				</li>
 				<li class="nav-item dropdown">

@@ -12,6 +12,12 @@ STATUS_CHOICES = [('0', _('Draft')),
                   ('3', _('Cancel')),
                   ]
 
+TYPE_CHOICES = [('0', _('Cheque')),
+                  ('1', _('Bond')),
+                  ('2', _('Receipt')),
+                  ('3', _('Other')),
+                  ]
+
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.CharField(_('Department'), max_length=64, blank=True)
@@ -58,6 +64,9 @@ class Customer(models.Model):
 
     def cancel_offers(self):
         return Offer.objects.filter(customer=self, active=True, status='3').count()
+
+    def documents(self):
+        return Document.objects.filter(customer=self).count()
 
 class Offer(models.Model):
     customer = models.ForeignKey(Customer,
@@ -113,7 +122,7 @@ class Offer(models.Model):
     def total_(self):
         total = self.total_items_() + self.total_tax_()
         return round(total, 2)
-        
+
     def yaziyla(self):
         a = str(self.total_()).split('.')
         try:
@@ -130,7 +139,7 @@ class Offer(models.Model):
         return "{:,}".format(self.total_tax_())
 
     def total(self):
-        return "{:,}".format(self.total_())    
+        return "{:,}".format(self.total_())
 
     def status_offer(self):
         if '1' not in self.status:
@@ -179,3 +188,57 @@ class OfferItem(models.Model):
 
     def total(self):
         return "{:,}".format(round((self.cost * self.qty), 2))
+
+class Document(models.Model):
+    customer = models.ForeignKey(Customer,
+                                 verbose_name=_('Customer'),
+                                 on_delete=models.CASCADE)
+    date = models.DateTimeField(_('Date'), default=timezone.now)
+    description = models.TextField(_('Description'), max_length=256, blank=True)
+    documenttype = models.CharField(_('Document Type'),
+                              max_length=1,
+                              default=3,
+                              choices=TYPE_CHOICES)
+    amount = models.DecimalField(_('Amount'),
+                               decimal_places=2,
+                               default=0.00,
+                               max_digits=10)
+    created_at = models.DateTimeField(_('Created at'), auto_now_add=True)
+    created_by = models.ForeignKey(User,
+                                   on_delete=models.CASCADE,
+                                   blank=True,
+                                   verbose_name = _('Created by'),
+                                   related_name='documents')
+    updated_at= models.DateTimeField(_('Updated at'), auto_now=True)
+    updated_by = models.ForeignKey(User,
+                                   on_delete=models.CASCADE,
+                                   verbose_name = _('Updated by'),
+                                   related_name='documents_updates',
+                                   blank=True)
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = _('Document')
+        verbose_name_plural = _('Documents')
+
+    def document_amount(self):
+        return "{:,}".format(self.amount)
+
+    def cheque(self):
+        return self.documenttype == '0'
+
+    def bond(self):
+        return self.documenttype == '1'
+
+    def receipt(self):
+        return self.documenttype == '2'
+
+    def other(self):
+        return self.documenttype == '3'
+
+class DocumentAttachment(models.Model):
+	file = models.FileField(upload_to='document/')
+	displayname = models.CharField(max_length=128)
+	document = models.ForeignKey(Document, on_delete=models.CASCADE)
