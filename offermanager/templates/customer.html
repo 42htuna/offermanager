@@ -3,10 +3,12 @@
 {% block content %}
 
 {% if error_message %}
-<div class="danger">{{ error_message }}</div>
+<div class="alert alert-danger">{{ error_message }}</div>
 {% endif %}
 
 {% if customer %}
+<!-- Display customer -->
+
 <!-- Customer information -->
 <form method="POST" action="{% url 'update_customer' customer.id %}" name="customer" class="form-default">
 	{% csrf_token %}
@@ -91,6 +93,35 @@
 	</div>
 	</table>
 </div>
+<!-- End customer offers -->
+
+<!-- Customer documents -->
+<div class="card card-primary">
+	<div class="card-header">{% trans 'Customer Documents' %}</div>
+	<div class="table-responsive-sm">
+	<table class="table table-sm text-right">
+		<tr class="table-default">
+			<th class="text-left">ID</th>
+			<th class="text-center">{% trans 'Date' %}</th>
+			<th class="text-left">{% trans 'Description' %}</th>
+			<th>{% trans 'Amount' %}</th>
+		</tr>
+	{% for document in documents %}
+		<tr>
+			<td class="text-left">{{ document.id }}</td>
+			<td class="text-center">{{ document.date|date:"DATE_FORMAT" }}</td>
+			<td class="text-left">{{ document.description }}</td>
+			<td>{{ document.document_amount }} TL</td>
+			<td>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'document' document.id %}" target="new">{% trans 'View' %}</a>
+				<button type="button" data-toggle="modal" data-target="#confirmdocumentdelete" data-object-name="{{ document.id }}" data-delete-url="{% url 'delete_document' document.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
+			</td>
+		</tr>
+	{% endfor %}
+	</div>
+	</table>
+</div>
+<!-- End customer documents -->
 
 <!-- Delete customer confirmation modal -->
 <div class="modal fade" id="confirmcustomerdelete" role="dialog">
@@ -151,6 +182,36 @@
 	});
 </script>
 <!-- END delete offer confirmation modal -->
+
+<!-- Delete document confirmation modal -->
+<div class="modal fade" id="confirmdocumentdelete" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#confirmdocumentdelete').on('show.bs.modal', function(e) {
+			var name = $(e.relatedTarget).data('object-name');
+			var url = $(e.relatedTarget).data('delete-url');
+			$('#confirmdocumentdelete .modal-body').html("{% trans 'Are you sure you want to delete document? ' %}" + name + "<br><i>{% trans 'This will delete all associated items!' %}</i>");
+			$('#confirmdocumentdelete .modal-footer a').attr('href', url);
+		});
+	});
+</script>
+<!-- END delete document confirmation modal -->
 
 <!-- End display customer -->
 {% endif %}

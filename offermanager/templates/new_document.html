@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if customer_list %}
-<form method="POST" action="{% url 'new_offer' %}" name="customer" class="form-default">
+<form method="POST" action="{% url 'new_document' %}" name="customer" class="form-default">
 	{% csrf_token %}
 	<div class="card card-primary">
 		<div class="card-header">{% trans 'Select Customer' %}</div>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="card-footer">
 			<a href="{% url 'new_customer' %}" class="btn btn-default my-2 my-sm-0 btn-sm">{% trans 'Add New Customer' %}</a>
-			<input class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Create Offer' %}">
+			<input class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Create Document' %}">
 		</div>
 	</div>
 </form>

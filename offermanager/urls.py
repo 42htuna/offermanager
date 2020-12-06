@@ -16,9 +16,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from offermanager import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = "offermanager"
 urlpatterns = [
+    
     # # # DEFAULT
     path('', views.index, name='index'),
 
@@ -60,4 +63,20 @@ urlpatterns = [
 
     # # # REPORTS
     path('accounting/', views.accounting, name='accounting'),
-]
+    
+    # # # DOCUMENTS
+    path('document/recent/', views.recent_documents, name='recent_documents'),
+    path('document/all/', views.all_documents, name='all_documents'),
+    path('document/cheque/', views.cheques, name='cheques'),
+    path('document/bond/', views.bonds, name='bonds'),
+    path('document/receipt/', views.receipts, name='receipts'),
+    path('document/other/', views.others, name='others'),
+    path('document/<int:document_id>/', views.document, name='document'),
+    path('document/new/', views.new_document, name='new_document'),
+    path('document/<int:document_id>/update/', views.update_document, name='update_document'),
+    path('document/<int:document_id>/delete/', views.delete_document, name='delete_document'),
+    
+    # # # ATTACHMENTS
+    path('document/<int:document_id>/attachments/add/', views.upload_document_attachment, name='upload_document_attachment'),
+    path('document/<int:document_id>/attachments/<int:documentattachment_id>/delete/', views.delete_document_attachment, name='delete_document_attachment'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

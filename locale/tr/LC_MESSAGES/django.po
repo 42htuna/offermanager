@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-20 18:56+0300\n"
+"POT-Creation-Date: 2020-12-06 21:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: myofferproject/settings.py:117
-msgid "English"
-msgstr "İngilizce"
-
-#: myofferproject/settings.py:118
-msgid "Turkish"
-msgstr "Türkçe"
-
 #: offermanager/admin.py:11
 msgid "Employee"
 msgstr "Çalışan"
 
-#: offermanager/admin.py:50
+#: offermanager/admin.py:50 offermanager/admin.py:87
 msgid "DATE INFORMATION"
 msgstr "TARİH BİLGİSİ"
 
@@ -38,133 +30,196 @@ msgstr "TARİH BİLGİSİ"
 msgid "TERMS OF OFFER"
 msgstr "TEKLİF ŞARTLARI"
 
-#: offermanager/models.py:8 offermanager/templates/customers.html:14
+#: offermanager/admin.py:88
+msgid "DESCRIPTION"
+msgstr "AÇIKLAMA"
+
+#: offermanager/models.py:9 offermanager/templates/customers.html:14
 #: offermanager/templates/offer.html:58
 msgid "Draft"
 msgstr "Taslak"
 
-#: offermanager/models.py:9 offermanager/templates/customers.html:15
+#: offermanager/models.py:10 offermanager/templates/customers.html:15
 #: offermanager/templates/offer.html:59
 msgid "Approved"
 msgstr "Onaylı"
 
-#: offermanager/models.py:10 offermanager/templates/customers.html:16
+#: offermanager/models.py:11 offermanager/templates/customers.html:16
 #: offermanager/templates/offer.html:60
 msgid "Unapproved"
 msgstr "Onaysız"
 
-#: offermanager/models.py:11 offermanager/templates/customers.html:17
+#: offermanager/models.py:12 offermanager/templates/customers.html:17
 #: offermanager/templates/offer.html:61
 msgid "Cancel"
 msgstr "İptal"
 
-#: offermanager/models.py:16
+#: offermanager/models.py:15 offermanager/templates/document.html:58
+msgid "Cheque"
+msgstr "Çek"
+
+#: offermanager/models.py:16 offermanager/templates/document.html:59
+msgid "Bond"
+msgstr "Senet"
+
+#: offermanager/models.py:17 offermanager/templates/document.html:60
+msgid "Receipt"
+msgstr "Makbuz"
+
+#: offermanager/models.py:18 offermanager/templates/document.html:61
+msgid "Other"
+msgstr "Diğer"
+
+#: offermanager/models.py:23
 msgid "Department"
 msgstr "Departmanı"
 
-#: offermanager/models.py:17 offermanager/models.py:24
+#: offermanager/models.py:24 offermanager/models.py:31
 #: offermanager/templates/new_customer.html:24
 msgid "Phone"
 msgstr "Telefon"
 
-#: offermanager/models.py:22
+#: offermanager/models.py:29
 msgid "Customer Name"
 msgstr "Müşteri Adı"
 
-#: offermanager/models.py:23 offermanager/templates/new_customer.html:30
+#: offermanager/models.py:30 offermanager/templates/new_customer.html:30
 msgid "Address"
 msgstr "Adres"
 
-#: offermanager/models.py:25
+#: offermanager/models.py:32
 msgid "E Mail"
 msgstr "E Posta"
 
-#: offermanager/models.py:26 offermanager/models.py:72
+#: offermanager/models.py:33 offermanager/models.py:82
+#: offermanager/models.py:206
 msgid "Created at"
 msgstr "Oluşturuldu"
 
-#: offermanager/models.py:30 offermanager/models.py:76
+#: offermanager/models.py:37 offermanager/models.py:86
+#: offermanager/models.py:210
 msgid "Created by"
 msgstr "Oluşturan"
 
-#: offermanager/models.py:32 offermanager/models.py:78
+#: offermanager/models.py:39 offermanager/models.py:88
+#: offermanager/models.py:212
 msgid "Updated at"
 msgstr "Güncellendi"
 
-#: offermanager/models.py:35 offermanager/models.py:81
+#: offermanager/models.py:42 offermanager/models.py:91
+#: offermanager/models.py:215
 msgid "Updated by"
 msgstr "Güncelleyen"
 
-#: offermanager/models.py:43 offermanager/models.py:63
-#: offermanager/templates/accounting.html:17
+#: offermanager/models.py:50 offermanager/models.py:73
+#: offermanager/models.py:194 offermanager/templates/accounting.html:17
+#: offermanager/templates/document.html:17
+#: offermanager/templates/documents.html:13
+#: offermanager/templates/documents.html:27
 #: offermanager/templates/index.html:13 offermanager/templates/index.html:30
 #: offermanager/templates/offer.html:17
 msgid "Customer"
 msgstr "Müşteri"
 
-#: offermanager/models.py:44 offermanager/templates/base.html:55
+#: offermanager/models.py:51 offermanager/templates/base.html:68
 msgid "Customers"
 msgstr "Müşteriler"
 
-#: offermanager/models.py:65 offermanager/templates/accounting.html:18
-#: offermanager/templates/customer.html:72 offermanager/templates/index.html:14
+#: offermanager/models.py:75 offermanager/models.py:196
+#: offermanager/templates/accounting.html:18
+#: offermanager/templates/customer.html:74
+#: offermanager/templates/customer.html:105
+#: offermanager/templates/documents.html:14
+#: offermanager/templates/index.html:14
 msgid "Date"
 msgstr "Tarih"
 
-#: offermanager/models.py:66
+#: offermanager/models.py:76
 msgid "Terms"
 msgstr "Şartlar"
 
-#: offermanager/models.py:67
+#: offermanager/models.py:77
 msgid "Status"
 msgstr "Durum"
 
-#: offermanager/models.py:71
+#: offermanager/models.py:81
 msgid "Active"
 msgstr "Aktif"
 
-#: offermanager/models.py:89 offermanager/templates/base.html:33
+#: offermanager/models.py:99 offermanager/templates/base.html:33
 #: offermanager/templates/offer.html:11
 msgid "Offer"
 msgstr "Teklif"
 
-#: offermanager/models.py:90 offermanager/templates/accounting.html:12
+#: offermanager/models.py:100 offermanager/templates/accounting.html:12
 #: offermanager/templates/base.html:42 offermanager/templates/customers.html:13
 #: offermanager/templates/index.html:8
 msgid "Offers"
 msgstr "Teklifler"
 
-#: offermanager/models.py:123
+#: offermanager/models.py:152
 msgid "The offer has approved?"
 msgstr "Teklif onaylandı mı?"
 
-#: offermanager/models.py:141 offermanager/templates/offer.html:93
+#: offermanager/models.py:170 offermanager/templates/offer.html:93
 msgid "Type"
 msgstr "Cinsi"
 
-#: offermanager/models.py:142 offermanager/templates/offer.html:95
+#: offermanager/models.py:171 offermanager/templates/offer.html:95
 msgid "Unit"
 msgstr "Birim"
 
-#: offermanager/models.py:146 offermanager/templates/offer.html:94
+#: offermanager/models.py:175 offermanager/templates/offer.html:94
 msgid "Qty"
 msgstr "Miktar"
 
-#: offermanager/models.py:150 offermanager/templates/offer.html:96
+#: offermanager/models.py:179 offermanager/templates/offer.html:96
 msgid "Cost"
 msgstr "Fiyat"
 
-#: offermanager/models.py:154 offermanager/templates/offer.html:97
+#: offermanager/models.py:183 offermanager/templates/offer.html:97
 msgid "Tax"
 msgstr "Kdv"
 
-#: offermanager/models.py:157
+#: offermanager/models.py:186
 msgid "Offer item"
 msgstr "Teklif öğe"
 
-#: offermanager/models.py:158 offermanager/templates/offer.html:88
+#: offermanager/models.py:187 offermanager/templates/offer.html:88
 msgid "Offer items"
 msgstr "Teklif öğeleri"
+
+#: offermanager/models.py:197 offermanager/templates/customer.html:106
+#: offermanager/templates/documents.html:15
+msgid "Description"
+msgstr "Açıklama"
+
+#: offermanager/models.py:198
+msgid "Document Type"
+msgstr "Belge Türü"
+
+#: offermanager/models.py:202 offermanager/templates/customer.html:107
+#: offermanager/templates/documents.html:16
+msgid "Amount"
+msgstr "Tutar"
+
+#: offermanager/models.py:223 offermanager/templates/document.html:11
+msgid "Document"
+msgstr "Belgeler"
+
+#: offermanager/models.py:224 offermanager/templates/base.html:55
+#: offermanager/templates/customers.html:18
+#: offermanager/templates/documents.html:8
+msgid "Documents"
+msgstr "Belgeler"
+
+#: offermanager/settings.py:117
+msgid "English"
+msgstr "İngilizce"
+
+#: offermanager/settings.py:118
+msgid "Turkish"
+msgstr "Türkçe"
 
 #: offermanager/templates/accounting.html:10
 msgid "Accounting Report : "
@@ -176,31 +231,34 @@ msgid "to"
 msgstr "den"
 
 #: offermanager/templates/accounting.html:19
-#: offermanager/templates/customer.html:73 offermanager/templates/index.html:15
+#: offermanager/templates/customer.html:75 offermanager/templates/index.html:15
 msgid "Sub Total"
 msgstr "Ara Toplam"
 
 #: offermanager/templates/accounting.html:20
-#: offermanager/templates/customer.html:74 offermanager/templates/index.html:16
+#: offermanager/templates/customer.html:76 offermanager/templates/index.html:16
 msgid "Tax Total"
 msgstr "Kdv Toplam"
 
 #: offermanager/templates/accounting.html:21
-#: offermanager/templates/customer.html:75 offermanager/templates/index.html:17
+#: offermanager/templates/customer.html:77 offermanager/templates/index.html:17
 msgid "General Total"
 msgstr "Genel Toplam"
 
 #: offermanager/templates/accounting.html:22
-#: offermanager/templates/customer.html:76
-#: offermanager/templates/customers.html:18
+#: offermanager/templates/customer.html:78
+#: offermanager/templates/customers.html:19
+#: offermanager/templates/document.html:100
 #: offermanager/templates/index.html:18 offermanager/templates/offer.html:99
 msgid "Actions"
 msgstr "Eylemler"
 
 #: offermanager/templates/accounting.html:32
 #: offermanager/templates/accounting.html:70
-#: offermanager/templates/customer.html:86
-#: offermanager/templates/customers.html:30
+#: offermanager/templates/customer.html:88
+#: offermanager/templates/customer.html:116
+#: offermanager/templates/customers.html:32
+#: offermanager/templates/documents.html:26
 #: offermanager/templates/index.html:29
 msgid "View"
 msgstr "Görüntüle"
@@ -214,7 +272,7 @@ msgid "Choose a date range"
 msgstr "Bir tarih aralığı seçin"
 
 #: offermanager/templates/base.html:14
-#: offermanager/templates/print_offer.html:10
+#: offermanager/templates/print_offer.html:14
 msgid "Offer Manager"
 msgstr "Teklif Yöneticisi"
 
@@ -222,143 +280,214 @@ msgstr "Teklif Yöneticisi"
 msgid "Manager"
 msgstr "Yöneticisi"
 
-#: offermanager/templates/base.html:44 offermanager/views.py:176
+#: offermanager/templates/base.html:44 offermanager/views.py:181
 #: offermanager/views.py:195
 msgid "New Offer"
 msgstr "Yeni Teklif"
 
-#: offermanager/templates/base.html:45
-msgid "Recent"
+#: offermanager/templates/base.html:45 offermanager/views.py:114
+msgid "Recent Offers"
 msgstr "Son Teklifler"
 
 #: offermanager/templates/base.html:47
-msgid "List All"
+msgid "List All Offers"
 msgstr "Tüm Teklifler"
 
-#: offermanager/templates/base.html:48 offermanager/views.py:135
+#: offermanager/templates/base.html:48 offermanager/views.py:128
 msgid "Draft Offers"
 msgstr "Taslak Teklifler"
 
-#: offermanager/templates/base.html:49 offermanager/views.py:143
+#: offermanager/templates/base.html:49 offermanager/views.py:135
 msgid "Approved Offers"
 msgstr "Onaylanan Teklifler"
 
-#: offermanager/templates/base.html:50 offermanager/views.py:152
+#: offermanager/templates/base.html:50 offermanager/views.py:142
 msgid "Unapproved Offers"
 msgstr "Onaylanmayan Teklifler"
 
-#: offermanager/templates/base.html:51 offermanager/views.py:161
+#: offermanager/templates/base.html:51 offermanager/views.py:149
 msgid "Canceled Offers"
 msgstr "İptal edilen Teklifler"
 
-#: offermanager/templates/base.html:57
+#: offermanager/templates/base.html:57 offermanager/views.py:344
+#: offermanager/views.py:356
+msgid "New Document"
+msgstr "Yeni Belge"
+
+#: offermanager/templates/base.html:58 offermanager/views.py:291
+msgid "Recent Documents"
+msgstr "Son Belgeler"
+
+#: offermanager/templates/base.html:60
+msgid "List All Documents"
+msgstr "Tüm Belgeler"
+
+#: offermanager/templates/base.html:61 offermanager/views.py:305
+msgid "Cheques"
+msgstr "Çekler"
+
+#: offermanager/templates/base.html:62 offermanager/views.py:312
+msgid "Bonds"
+msgstr "Senetler"
+
+#: offermanager/templates/base.html:63 offermanager/views.py:319
+msgid "Receipts"
+msgstr "Makbuzlar"
+
+#: offermanager/templates/base.html:64 offermanager/views.py:326
+msgid "Others"
+msgstr "Diğerleri"
+
+#: offermanager/templates/base.html:70
 #: offermanager/templates/new_customer.html:12
 msgid "New Customer"
 msgstr "Yeni Müşteri"
 
-#: offermanager/templates/base.html:59
+#: offermanager/templates/base.html:72
 msgid "Customer List All"
 msgstr "Tüm Müşteriler"
 
-#: offermanager/templates/base.html:63
+#: offermanager/templates/base.html:76
 msgid "Reports"
 msgstr "Raporlar"
 
-#: offermanager/templates/base.html:65
+#: offermanager/templates/base.html:78
 msgid "Accounting"
 msgstr "Hesaplama"
 
-#: offermanager/templates/base.html:70
+#: offermanager/templates/base.html:83
 msgid "Hello"
 msgstr "Merhaba"
 
-#: offermanager/templates/base.html:72
+#: offermanager/templates/base.html:85
 msgid "Admin"
 msgstr "Yönetim"
 
-#: offermanager/templates/base.html:73
+#: offermanager/templates/base.html:86
 msgid "Logout"
 msgstr "Çıkış"
 
-#: offermanager/templates/base.html:79
+#: offermanager/templates/base.html:92
 msgid "Offer ID"
 msgstr "Teklif ID"
 
-#: offermanager/templates/base.html:80 offermanager/templates/base.html:96
+#: offermanager/templates/base.html:93 offermanager/templates/base.html:109
 msgid "Go"
 msgstr "Git"
 
-#: offermanager/templates/customer.html:14
+#: offermanager/templates/customer.html:16
 msgid "Customer Info"
 msgstr "Müşteri bilgisi"
 
-#: offermanager/templates/customer.html:17
+#: offermanager/templates/customer.html:19
 msgid "ID : "
 msgstr ""
 
-#: offermanager/templates/customer.html:22
+#: offermanager/templates/customer.html:24
 msgid "Customer Name : "
 msgstr "Müşteri Adı : "
 
-#: offermanager/templates/customer.html:30
+#: offermanager/templates/customer.html:32
 #: offermanager/templates/new_customer.html:23
 msgid "Phone : "
 msgstr "Telefon : "
 
-#: offermanager/templates/customer.html:38
+#: offermanager/templates/customer.html:40
 #: offermanager/templates/new_customer.html:29
 msgid "Address : "
 msgstr "Adres : "
 
-#: offermanager/templates/customer.html:46
+#: offermanager/templates/customer.html:48
 #: offermanager/templates/new_customer.html:35
 msgid "E Mail : "
 msgstr "E Posta : "
 
-#: offermanager/templates/customer.html:55
+#: offermanager/templates/customer.html:57
 msgid "Update"
 msgstr "Güncelle"
 
-#: offermanager/templates/customer.html:56
+#: offermanager/templates/customer.html:58
 msgid "Send E-mail"
 msgstr "Mail gönder"
 
-#: offermanager/templates/customer.html:57
-#: offermanager/templates/customer.html:87
-#: offermanager/templates/customers.html:32
+#: offermanager/templates/customer.html:59
+#: offermanager/templates/customer.html:89
+#: offermanager/templates/customer.html:117
+#: offermanager/templates/customers.html:34
+#: offermanager/templates/document.html:84
+#: offermanager/templates/document.html:107
 #: offermanager/templates/offer.html:78 offermanager/templates/offer.html:111
 msgid "Delete"
 msgstr "Sil"
 
-#: offermanager/templates/customer.html:67
+#: offermanager/templates/customer.html:69
 msgid "Customer Offers"
 msgstr "Müşteri Teklifleri"
 
 #: offermanager/templates/customer.html:100
-#: offermanager/templates/customers.html:45
-#: offermanager/templates/offer.html:163 offermanager/templates/offer.html:193
+msgid "Customer Documents"
+msgstr "Müşteri Belgeleri"
+
+#: offermanager/templates/customer.html:131
+#: offermanager/templates/customer.html:161
+#: offermanager/templates/customer.html:191
+#: offermanager/templates/customers.html:47
+#: offermanager/templates/document.html:132
+#: offermanager/templates/document.html:162
+#: offermanager/templates/offer.html:175 offermanager/templates/offer.html:205
+#: offermanager/templates/offer.html:235
 msgid "Confirm"
 msgstr "Onayla"
 
-#: offermanager/templates/customer.html:107
-#: offermanager/templates/customers.html:52
-#: offermanager/templates/offer.html:170 offermanager/templates/offer.html:200
+#: offermanager/templates/customer.html:138
+#: offermanager/templates/customer.html:168
+#: offermanager/templates/customer.html:198
+#: offermanager/templates/customers.html:54
+#: offermanager/templates/document.html:139
+#: offermanager/templates/document.html:169
+#: offermanager/templates/offer.html:182 offermanager/templates/offer.html:212
+#: offermanager/templates/offer.html:242
 msgid "No"
 msgstr "Hayır"
 
-#: offermanager/templates/customer.html:108
-#: offermanager/templates/customers.html:53
-#: offermanager/templates/offer.html:171 offermanager/templates/offer.html:201
+#: offermanager/templates/customer.html:139
+#: offermanager/templates/customer.html:169
+#: offermanager/templates/customer.html:199
+#: offermanager/templates/customers.html:55
+#: offermanager/templates/document.html:140
+#: offermanager/templates/document.html:170
+#: offermanager/templates/offer.html:183 offermanager/templates/offer.html:213
+#: offermanager/templates/offer.html:243
 msgid "Yes"
 msgstr "Evet"
 
-#: offermanager/templates/customer.html:118
+#: offermanager/templates/customer.html:149
+#: offermanager/templates/customers.html:65
+#: offermanager/templates/offer.html:223
+msgid "Are you sure you want to delete? "
+msgstr "Silmek istediğine emin misin? "
+
+#: offermanager/templates/customer.html:149
+#: offermanager/templates/customers.html:65
+msgid "This will delete all associated offers, items!"
+msgstr "Bu ilişkili tüm teklifleri ve öğeleri silecektir!"
+
+#: offermanager/templates/customer.html:179
+#: offermanager/templates/offer.html:253
 msgid "Are you sure you want to delete offer? "
 msgstr "Teklifi silmek istiyor musun? "
 
-#: offermanager/templates/customer.html:118
+#: offermanager/templates/customer.html:179
+#: offermanager/templates/customer.html:209
+#: offermanager/templates/document.html:150
+#: offermanager/templates/offer.html:253
 msgid "This will delete all associated items!"
 msgstr "Bu ilişkili tüm öğeleri silecektir!"
+
+#: offermanager/templates/customer.html:209
+#: offermanager/templates/document.html:150
+msgid "Are you sure you want to delete document? "
+msgstr "Belgeyi silmek istiyor musun? "
 
 #: offermanager/templates/customers.html:7
 msgid "Customer list"
@@ -368,42 +497,96 @@ msgstr "Müşteri listesi"
 msgid "Name"
 msgstr "Adı"
 
-#: offermanager/templates/customers.html:31
+#: offermanager/templates/customers.html:33
 msgid "Send Email"
 msgstr "Mail gönder"
 
-#: offermanager/templates/customers.html:63
-#: offermanager/templates/offer.html:211
-msgid "Are you sure you want to delete? "
-msgstr "Silmek istediğine emin misin? "
-
-#: offermanager/templates/customers.html:63
-msgid "This will delete all associated offers, items!"
-msgstr "Bu ilişkili tüm teklifleri ve öğeleri silecektir!"
-
-#: offermanager/templates/customers.html:71
+#: offermanager/templates/customers.html:73
+#: offermanager/templates/new_document.html:35
 #: offermanager/templates/new_offer.html:35
 msgid "No customers!"
 msgstr "Müşteri yok!"
 
-#: offermanager/templates/index.html:39
-#: offermanager/templates/print_offer.html:120
+#: offermanager/templates/document.html:22
+#: offermanager/templates/new_document.html:16
+#: offermanager/templates/new_offer.html:16
+#: offermanager/templates/offer.html:22
+msgid "Customer : "
+msgstr "Müşteri : "
+
+#: offermanager/templates/document.html:30 offermanager/templates/offer.html:30
+msgid "Date : "
+msgstr "Tarih : "
+
+#: offermanager/templates/document.html:55
+msgid "Document Type : "
+msgstr "Belge Türü : "
+
+#: offermanager/templates/document.html:68
+msgid "Amount : "
+msgstr "Tutar : "
+
+#: offermanager/templates/document.html:76
+msgid "Description : "
+msgstr "Açıklama : "
+
+#: offermanager/templates/document.html:83
+#: offermanager/templates/new_customer.html:44
+#: offermanager/templates/offer.html:75
+msgid "Save"
+msgstr "Kaydet"
+
+#: offermanager/templates/document.html:94
+msgid "Document Attachments"
+msgstr "Belge Ekleri"
+
+#: offermanager/templates/document.html:99
+msgid "File"
+msgstr "Dosya"
+
+#: offermanager/templates/document.html:117
+msgid "Upload"
+msgstr "Yükle"
+
+#: offermanager/templates/document.html:180
+msgid " Are you sure you want to delete document attachment?"
+msgstr " Belge ekini silmek istiyor musun? "
+
+#: offermanager/templates/document.html:194
+#: offermanager/templates/offer.html:267
+msgid "Changes saved!"
+msgstr "Değişiklikler kaydedildi!"
+
+#: offermanager/templates/document.html:197
+#: offermanager/templates/offer.html:270
+msgid "Ok"
+msgstr "Tamam"
+
+#: offermanager/templates/document.html:215
+msgid "Document number not found!"
+msgstr "Belge numarası bulunamadı!"
+
+#: offermanager/templates/documents.html:36
+msgid "No documents!"
+msgstr "Belge yok!"
+
+#: offermanager/templates/index.html:39 offermanager/views.py:168
 msgid "No offers!"
 msgstr "Teklif yok!"
 
-#: offermanager/templates/login.html:8
+#: offermanager/templates/login.html:12
 msgid "Please login"
 msgstr "Lütfen giriş yapınız"
 
-#: offermanager/templates/login.html:11
+#: offermanager/templates/login.html:15
 msgid "Username : "
 msgstr "Kullanıcı :"
 
-#: offermanager/templates/login.html:15
+#: offermanager/templates/login.html:19
 msgid "Password : "
 msgstr "Şifre : "
 
-#: offermanager/templates/login.html:20
+#: offermanager/templates/login.html:24
 msgid "Login"
 msgstr "Giriş"
 
@@ -420,34 +603,31 @@ msgid "Save & Create Offer"
 msgstr "Kaydet & Teklif Oluştur"
 
 #: offermanager/templates/new_customer.html:43
-#: offermanager/templates/offer.html:75
-msgid "Save"
-msgstr "Kaydet"
+msgid "Save & Create Document"
+msgstr "Kaydet & Belge Oluştur"
 
+#: offermanager/templates/new_document.html:13
 #: offermanager/templates/new_offer.html:13
 msgid "Select Customer"
 msgstr "Müşteri seçin"
 
-#: offermanager/templates/new_offer.html:16
-#: offermanager/templates/offer.html:22
-msgid "Customer : "
-msgstr "Müşteri : "
-
+#: offermanager/templates/new_document.html:19
 #: offermanager/templates/new_offer.html:19
 msgid "(Select)"
 msgstr "(Seçim)"
 
+#: offermanager/templates/new_document.html:28
 #: offermanager/templates/new_offer.html:28
 msgid "Add New Customer"
 msgstr "Yeni Müşteri Ekle"
 
+#: offermanager/templates/new_document.html:29
+msgid "Create Document"
+msgstr "Belge Oluştur"
+
 #: offermanager/templates/new_offer.html:29
 msgid "Create Offer"
 msgstr "Teklif Oluştur"
-
-#: offermanager/templates/offer.html:30
-msgid "Date : "
-msgstr "Tarih : "
 
 #: offermanager/templates/offer.html:55
 msgid "Status : "
@@ -469,40 +649,32 @@ msgstr "Pasif"
 msgid "Total"
 msgstr "Toplam"
 
-#: offermanager/templates/offer.html:136
+#: offermanager/templates/offer.html:147
 msgid "Add"
 msgstr "Ekle"
 
-#: offermanager/templates/offer.html:143
+#: offermanager/templates/offer.html:154
 msgid "Sub Total : "
 msgstr "Ara Toplam : "
 
-#: offermanager/templates/offer.html:147
+#: offermanager/templates/offer.html:158
 msgid "Tax Total : "
 msgstr "Kdv Toplam : "
 
-#: offermanager/templates/offer.html:151
+#: offermanager/templates/offer.html:162
 msgid "General Total : "
 msgstr "Genel Toplam : "
 
-#: offermanager/templates/offer.html:181
+#: offermanager/templates/offer.html:193
 msgid "Are you sure you want to passive? "
 msgstr "Pasif yapmak istiyor musun? "
 
-#: offermanager/templates/offer.html:225
-msgid "Changes saved!"
-msgstr "Değişiklikler kaydedildi!"
-
-#: offermanager/templates/offer.html:228
-msgid "Ok"
-msgstr "Tamam"
-
-#: offermanager/templates/offer.html:245
+#: offermanager/templates/offer.html:288
 msgid "Offer number not found!"
 msgstr "Teklif numarası bulunamadı!"
 
-#: offermanager/templates/print_offer.html:44 offermanager/views.py:117
-#: offermanager/views.py:217 offermanager/views.py:255
+#: offermanager/templates/print_offer.html:44 offermanager/views.py:156
+#: offermanager/views.py:210 offermanager/views.py:232
 msgid "Offer "
 msgstr "Teklif "
 
@@ -510,39 +682,39 @@ msgstr "Teklif "
 msgid "Customer number : "
 msgstr "Müşteri no : "
 
-#: offermanager/templates/print_offer.html:71
+#: offermanager/templates/print_offer.html:72
 msgid "TYPE"
 msgstr "CİNSİ"
 
-#: offermanager/templates/print_offer.html:72
+#: offermanager/templates/print_offer.html:73
 msgid "QTY"
 msgstr "MİKTAR"
 
-#: offermanager/templates/print_offer.html:73
+#: offermanager/templates/print_offer.html:74
 msgid "UNIT"
 msgstr "BİRİM"
 
-#: offermanager/templates/print_offer.html:74
+#: offermanager/templates/print_offer.html:75
 msgid "COST"
 msgstr "FİYAT"
 
-#: offermanager/templates/print_offer.html:75
+#: offermanager/templates/print_offer.html:76
 msgid "TAX"
 msgstr "KDV"
 
-#: offermanager/templates/print_offer.html:76
+#: offermanager/templates/print_offer.html:77
 msgid "TOTAL"
 msgstr "TOPLAM"
 
-#: offermanager/templates/print_offer.html:104
+#: offermanager/templates/print_offer.html:108
 msgid "SUB : "
 msgstr "ARA TOP. : "
 
-#: offermanager/templates/print_offer.html:105
+#: offermanager/templates/print_offer.html:109
 msgid "TAX : "
 msgstr "KDV : "
 
-#: offermanager/templates/print_offer.html:106
+#: offermanager/templates/print_offer.html:110
 msgid "TOTAL : "
 msgstr "TOPLAM :"
 
@@ -552,38 +724,54 @@ msgstr ""
 "Giriş yapılamıyor! Lütfen kullanıcı adınızı ve şifrenizi kontrol edin ve "
 "tekrar deneyin."
 
-#: offermanager/views.py:43
+#: offermanager/views.py:42
 msgid "Customer List"
 msgstr "Müşteri Listesi"
 
-#: offermanager/views.py:54
+#: offermanager/views.py:51
 msgid "Customer info"
 msgstr "Müşteri bilgisi"
 
-#: offermanager/views.py:107
-msgid "Recent Offers"
-msgstr "Son Teklifler"
+#: offermanager/views.py:106
+msgid "Unable to delete, because there is a recording of this customer!"
+msgstr "Bu müşteriye ait bir kayıt bulunduğundan, silinemedi!"
 
-#: offermanager/views.py:126
+#: offermanager/views.py:121
 msgid "All Offers"
 msgstr "Tüm Teklifler"
 
-#: offermanager/views.py:178
+#: offermanager/views.py:183 offermanager/views.py:346
 msgid "Please select a customer."
 msgstr "Lütfen bir müşteri seçin."
 
-#: offermanager/views.py:212
-msgid "Not able to update offer!"
+#: offermanager/views.py:208
+msgid "Unable to update offer!"
 msgstr "Teklif güncellenemiyor!"
 
-#: offermanager/views.py:274
+#: offermanager/views.py:247
 msgid "Not all fields were completed."
 msgstr "Tüm alanlar tamamlanmadı."
 
-#: offermanager/views.py:289
+#: offermanager/views.py:260
 msgid "Item does not exist."
 msgstr "Öğe mevcut değil."
 
-#: offermanager/views.py:301
+#: offermanager/views.py:272
 msgid "Start date must be before end date!"
 msgstr "Başlangıç tarihi bitiş tarihinden önce olmalıdır!"
+
+#: offermanager/views.py:298
+msgid "All Documents"
+msgstr "Tüm Belgeler"
+
+#: offermanager/views.py:333 offermanager/views.py:377
+msgid "Document "
+msgstr "Belge"
+
+#: offermanager/views.py:373
+msgid "Unable to update document!"
+msgstr "Teklif güncellenemiyor!"
+
+#: offermanager/views.py:422
+msgid "Unable to delete attachment!"
+msgstr "Ek silinemiyor!"

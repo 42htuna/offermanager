@@ -1,6 +1,10 @@
 {% load static %}
 {% load i18n %}
 
+{% if error_message %}
+<div class="alert alert-info">{{ error_message }}</div>
+{% endif %}
+
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
@@ -24,10 +28,6 @@
 
 		{% if offer %}
 		<div class="container">
-			{% if error_message %}
-			<div class="alert alert-danger">{{ error_message }}</div>
-			{% endif %}
-
 			<div class="row">
 				<div class="col-md-4 align-self-end">
 					<img class="logo" src="{% static 'images/logo.png' %}"><br>
@@ -63,6 +63,7 @@
 	  	</div>
 			<div class="row">
 			<div class="col-md-12">
+
 				<!-- Offer items -->
 				<div class="table-responsive-sm text-right">
 				<table class="table table-sm table-striped">
@@ -75,6 +76,7 @@
 						<th style="width:70px">{% trans 'TAX' %}</th>
 						<th style="width:150px">{% trans 'TOTAL' %}</th>
 					</tr>
+
 					{% for item in offer.offeritem_set.all %}
 						<td class="text-left">{{ forloop.counter }}</td>
 						<td class="text-left">{{ item.type }}</td>
@@ -84,6 +86,7 @@
 						<td>{{'% '}}{{ item.tax }}</td>
 						<td>{{ item.total }} TL</td>
 					</tr>
+
 					{% endfor %}
 				</table>
 				</div>
@@ -116,10 +119,7 @@
 			</div>
 		</div>
 		</div>
-
-		{% else %}
-		<div class="alert alert-info">{% trans 'No offers!' %}</div>
 		{% endif %}
-
+		
 	</body>
 </html>

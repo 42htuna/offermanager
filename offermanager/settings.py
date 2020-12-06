@@ -135,4 +135,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_URL = '/attachments/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments')
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

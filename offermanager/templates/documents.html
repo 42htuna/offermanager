@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+{% if document_list %}
+<!-- Default document list, show 25 recent documents -->
+<div class="card card-primary">
+	<div class="card-header">{% if title %}{{ title }}{% else %}{% trans 'Documents' %}{% endif %}</div>
+	<div class="table-responsive-sm text-right">
+	<table class="table table-sm">
+		<tr class="table-default">
+			<th class="text-left">ID</th>
+			<th class="text-left">{% trans 'Customer' %}</th>
+			<th class="text-center">{% trans 'Date' %}</th>
+			<th class="text-left">{% trans 'Description' %}</th>
+			<th>{% trans 'Amount' %}</th>
+		</tr>
+		{% for document in document_list %}
+		<tr>
+			<td class="text-left">{{ document.id }}</td>
+			<td class="text-left">{{ document.customer }}</td>
+			<td class="text-center">{{ document.date|date:"DATE_FORMAT" }}</td>
+			<td class="text-left">{{ document.description }}</td>
+			<td>{{ document.document_amount }} TL</td>
+			<td>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'document' document.id %}" target="new">{% trans 'View' %}</a>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'customer' document.customer.id %}" target="_new">{% trans 'Customer' %}</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+</div>
+
+{% else %}
+<div class="alert alert-info">{% trans 'No documents!' %}</div>
+{% endif %}
+
+{% endblock %}
