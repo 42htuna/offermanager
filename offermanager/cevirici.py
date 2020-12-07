@@ -29,7 +29,7 @@ class Cevirici:
         if oku == "":
             oku = "Sıfır"
         self.yaz = oku
-        print(oku)
+        #print(oku)
 
     def ucHaneOku(self, sayi):
         birler = {"0":"", "1":"Bir", "2":"İki", "3":"Üç", "4":"Dört", "5":"Beş", "6":"Altı", "7":"Yedi", "8":"Sekiz", "9":"Dokuz"}
