@@ -1,0 +1,127 @@
+{% load static %}
+{% load i18n %}
+
+{% if error_message %}
+<div class="alert alert-info">{{ error_message }}</div>
+{% endif %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		{% if title %}
+		<title>{{ title }}</title>
+		{% else %}
+		<title>{% trans 'Offer Manager' %}</title>
+		{% endif %}
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-height, initial-scale=no">
+
+		<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	</head>
+	<body>
+
+		{% if offer %}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 align-self-end">
+		<!--<a href="{% url 'print_offer_withoutlogo' offer.id %}">
+				<img class="logo" src="{% static 'images/logo.png' %}"><br>
+				</a>
+					<address>
+					<p>Abcdef Mh. Abcdef Sk. No:123</br>
+					0212 212 12 12 İSTANBUL</br>
+					info@mail.com</p>
+					</address>-->
+					<h5>{{ offer.employee }}</h5>
+					<p>{{ offer.employee.department }}</br>
+					   {{ offer.employee.user.email }}</p>
+				</div>
+				<div class="col-md-4 text-center align-self-end">
+					<h1>{% trans 'Offer ' %}</h1>
+					<h2>{{ offer.id }}</h2>
+					<h3>{{ offer.date|date:"DATE_FORMAT" }}</h3>
+				</div>
+				<div class="col-md-4 text-right align-self-end">
+					<div class="card card-default">
+						<div class="card-header">{% trans 'Customer number : ' %} {{ offer.customer.id }}</div>
+						<div class="card-body">
+							<address class="text-right">
+								<h5>{{ offer.customer.name }}</h5>
+								<p>{{ offer.customer.address }}</br>
+								{{ offer.customer.phone }}</br>
+								{{ offer.customer.taxoffice }}
+								{{ offer.customer.taxnumber }}</p>
+								<p>{{ offer.customer.email }}</a>
+							</address>
+						</div>
+		    	</div>
+		    </div>
+	  	</div>
+			<div class="row">
+			<div class="col-md-12">
+
+				<!-- Offer items -->
+				<div class="table-responsive-sm text-right">
+				<table class="table table-sm table-striped">
+					<tr>
+						<th style="width:30px">NO</th>
+						<th class="text-left">{% trans 'TYPE' %}</th>
+						<th>{% trans 'QTY' %}</th>
+						<th class="text-center" style="width:90px">{% trans 'UNIT' %}</th>
+						<th style="width:120px">{% trans 'COST' %}</th>
+						<th style="width:70px">{% trans 'TAX' %}</th>
+						<th style="width:150px">{% trans 'TOTAL' %}</th>
+					</tr>
+
+					{% for item in offer.offeritem_set.all %}
+						<td class="text-left">{{ forloop.counter }}</td>
+						<td class="text-left">{{ item.type }}</td>
+						<td>{{ item.qty }}</td>
+						<td  class="text-center">{{ item.unit }}</td>
+						<td>{{ item.cost }} TL</td>
+						<td>{{'% '}}{{ item.tax }}</td>
+						<td>{{ item.total }} TL</td>
+					</tr>
+
+					{% endfor %}
+				</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card card-default">
+					<div class="card-body">
+						<p>{{ offer.terms }}</p>
+						<p>{{ offer.yaziyla }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<table class="col mr-auto text-right">
+					<tr>
+						<td>
+							<h3>{% trans 'SUB : ' %}</h3>
+							<h3>{% trans 'TAX : ' %}</h3>
+							<h3>{% trans 'TOTAL : ' %}</h3>
+						</td>
+						<td>
+							<h3>{{ offer.total_items }} TL</h3>
+							<h3>{{ offer.total_tax }} TL</h3>
+							<h3>{{ offer.total }} TL</h3>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		</div>
+		{% endif %}
+		
+	</body>
+</html>
