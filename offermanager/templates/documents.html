@@ -23,7 +23,7 @@
 			<td class="text-left">{{ document.description }}</td>
 			<td>{{ document.document_amount }} TL</td>
 			<td>
-				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'document' document.id %}" target="new">{% trans 'View' %}</a>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'document' document.id %}" target="_new">{% trans 'View' %}</a>
 				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'customer' document.customer.id %}" target="_new">{% trans 'Customer' %}</a>
 			</td>
 		</tr>
