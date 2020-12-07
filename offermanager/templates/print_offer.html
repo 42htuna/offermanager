@@ -30,7 +30,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 align-self-end">
-					<img class="logo" src="{% static 'images/logo.png' %}"><br>
+				<a href="{% url 'print_offer_withoutlogo' offer.id %}">
+				<img class="logo" src="{% static 'images/logo.png' %}"><br>
+				</a>
 					<address>
 					<p>Abcdef Mh. Abcdef Sk. No:123</br>
 					0212 212 12 12 İSTANBUL</br>
