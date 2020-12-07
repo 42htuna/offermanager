@@ -734,7 +734,7 @@ msgstr "Müşteri bilgisi"
 
 #: offermanager/views.py:106
 msgid "Unable to delete, because there is a recording of this customer!"
-msgstr "Bu müşteriye ait bir kayıt bulunduğundan, silinemedi!"
+msgstr "Bu müşteriye ait bir kayıt bulunduğundan silinemedi!"
 
 #: offermanager/views.py:121
 msgid "All Offers"
