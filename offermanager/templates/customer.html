@@ -85,7 +85,7 @@
 			<td>{{ offer.total_tax }} TL</td>
 			<td>{{ offer.total }} TL</td>
 			<td>
-				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'offer' offer.id %}" target="new">{% trans 'View' %}</a>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'offer' offer.id %}" target="_new">{% trans 'View' %}</a>
 				<button type="button" data-toggle="modal" data-target="#confirmofferdelete" data-object-name="{{ offer.id }}" data-delete-url="{% url 'delete_offer' offer.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
 			</td>
 		</tr>
@@ -113,7 +113,7 @@
 			<td class="text-left">{{ document.description }}</td>
 			<td>{{ document.document_amount }} TL</td>
 			<td>
-				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'document' document.id %}" target="new">{% trans 'View' %}</a>
+				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'document' document.id %}" target="_new">{% trans 'View' %}</a>
 				<button type="button" data-toggle="modal" data-target="#confirmdocumentdelete" data-object-name="{{ document.id }}" data-delete-url="{% url 'delete_document' document.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
 			</td>
 		</tr>
