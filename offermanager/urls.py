@@ -60,6 +60,7 @@ urlpatterns = [
     # # # ITEMS
     path('offer/<int:offer_id>/item/add/', views.add_item, name='add_item'),
     path('offer/<int:offer_id>/item/<int:offeritem_id>/delete/', views.delete_item, name='delete_item'),
+    path('offer/<int:offer_id>/print/withoutlogo/', views.print_offer_withoutlogo, name='print_offer_withoutlogo'),
 
     # # # REPORTS
     path('accounting/', views.accounting, name='accounting'),
