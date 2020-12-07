@@ -232,6 +232,13 @@ def print_offer(request, offer_id):
     context = {'title' : _('Offer ') + str(offer_id), 'offer' : offer,}
     return render(request, 'print_offer.html', context)
 
+# Print offer with logo
+@login_required(login_url='login/')
+def print_offer_withoutlogo(request, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
+    context = {'title' : _('Offer ') + str(offer_id), 'offer' : offer,}
+    return render(request, 'print_offer_withoutlogo.html', context)
+
 # Add offeritem to offer
 @login_required(login_url='login/')
 def add_item(request, offer_id):
