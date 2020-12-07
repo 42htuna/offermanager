@@ -56,11 +56,11 @@ urlpatterns = [
     path('offer/<int:offer_id>/delete/', views.delete_offer, name='delete_offer'),
     path('offer/<int:offer_id>/passive/', views.passive_offer, name='passive_offer'),
     path('offer/<int:offer_id>/print/', views.print_offer, name='print_offer'),
+    path('offer/<int:offer_id>/print/withoutlogo/', views.print_offer_withoutlogo, name='print_offer_withoutlogo'),
 
     # # # ITEMS
     path('offer/<int:offer_id>/item/add/', views.add_item, name='add_item'),
     path('offer/<int:offer_id>/item/<int:offeritem_id>/delete/', views.delete_item, name='delete_item'),
-    path('offer/<int:offer_id>/print/withoutlogo/', views.print_offer_withoutlogo, name='print_offer_withoutlogo'),
 
     # # # REPORTS
     path('accounting/', views.accounting, name='accounting'),
