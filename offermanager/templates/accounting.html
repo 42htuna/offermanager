@@ -29,7 +29,7 @@
 			<td>{{ offer.total_items }} TL</td>
 			<td>{{ offer.total_tax }} TL</td>
 			<td>{{ offer.total }} TL</td>
-			<td><a class="btn btn-xs btn-default my-2 my-sm-0 btn-sm" href="{% url 'print_offer' offer.id %}" target="new">{% trans 'View' %}</a></td>
+			<td><a class="btn btn-xs btn-default my-2 my-sm-0 btn-sm" href="{% url 'print_offer' offer.id %}" target="_new">{% trans 'View' %}</a></td>
 		</tr>
 		{% endfor %}
 	</table>
