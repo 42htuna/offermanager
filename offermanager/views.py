@@ -66,15 +66,11 @@ def new_customer(request):
                      updated_by=request.user)
         c.save()
         if 'savecreate' in request.POST:
-            i = Offer(customer=c,
-                      created_by=request.user,
-                      updated_by=request.user)
+            i = Offer(customer=c, created_by=request.user, updated_by=request.user)
             i.save()
             return HttpResponseRedirect(reverse('offer', args=(i.id,)))
         elif 'savecreate_doc' in request.POST:
-            i = Document(customer=c,
-                         created_by=request.user,
-                         updated_by=request.user)
+            i = Document(customer=c, created_by=request.user, updated_by=request.user)
             i.save()
             return HttpResponseRedirect(reverse('document', args=(i.id,)))
         else:
@@ -184,9 +180,7 @@ def new_offer(request):
 			return render(request, 'new_offer.html', context)
 		else:
 			customer = get_object_or_404(Customer, pk=customer_id)
-			i = Offer(customer=customer,
-                      created_by=request.user,
-                      updated_by = request.user)
+			i = Offer(customer=customer, created_by=request.user, updated_by=request.user)
 			i.save()
 			return HttpResponseRedirect(reverse('offer', args=(i.id,)))
 	else:
