@@ -34,12 +34,12 @@ class Customer(models.Model):
     created_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE,
                                    blank=True,
-                                   verbose_name = _('Created by'),
+                                   verbose_name=_('Created by'),
                                    related_name='customers')
     updated_at= models.DateTimeField(_('Updated at'), auto_now=True)
     updated_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE,
-                                   verbose_name = _('Updated by'),
+                                   verbose_name=_('Updated by'),
                                    related_name='customers_updates',
                                    blank=True)
     def __str__(self):
@@ -83,12 +83,12 @@ class Offer(models.Model):
     created_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE,
                                    blank=True,
-                                   verbose_name = _('Created by'),
+                                   verbose_name=_('Created by'),
                                    related_name='offers')
     updated_at= models.DateTimeField(_('Updated at'), auto_now=True)
     updated_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE,
-                                   verbose_name = _('Updated by'),
+                                   verbose_name=_('Updated by'),
                                    related_name='offers_updates',
                                    blank=True)
 
@@ -207,12 +207,12 @@ class Document(models.Model):
     created_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE,
                                    blank=True,
-                                   verbose_name = _('Created by'),
+                                   verbose_name=_('Created by'),
                                    related_name='documents')
     updated_at= models.DateTimeField(_('Updated at'), auto_now=True)
     updated_by = models.ForeignKey(User,
                                    on_delete=models.CASCADE,
-                                   verbose_name = _('Updated by'),
+                                   verbose_name=_('Updated by'),
                                    related_name='documents_updates',
                                    blank=True)
 
