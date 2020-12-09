@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 {% block content %}
 
 {% if error_message %}
@@ -102,7 +103,7 @@
 		{% for attachment in document.documentattachment_set.all %}
 			<tr>
 				<td style="width: 40px;" class="text-left">{{ forloop.counter }}</td>
-				<td class="text-left"><a href="{{ attachment.file.url }}"  target="_new">{{ attachment.displayname }}</a></td>
+				<td class="text-left"><a href="{% static "attachments/" %}{{ attachment.file }}"  target="_new">{{ attachment.displayname }}</a></td>
 				<td>
 					<button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ attachment.displayname }}" data-delete-url="{% url 'delete_document_attachment' document.id attachment.id %}" class="btn btn-xs btn-danger">{% trans 'Delete' %}</button>
 				</td>
