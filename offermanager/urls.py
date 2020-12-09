@@ -17,7 +17,6 @@ from django.urls import path
 from django.conf.urls import include
 from offermanager import views
 from django.conf import settings
-from django.conf.urls.static import static
 
 app_name = "offermanager"
 urlpatterns = [
@@ -80,4 +79,16 @@ urlpatterns = [
     # # # ATTACHMENTS
     path('document/<int:document_id>/attachments/add/', views.upload_document_attachment, name='upload_document_attachment'),
     path('document/<int:document_id>/attachments/<int:documentattachment_id>/delete/', views.delete_document_attachment, name='delete_document_attachment'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+#from django.conf.urls.static import static
+#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#if settings.DEBUG:
+    #from django.conf.urls.static import static
+    #from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+    # serve static and media files from development server
+    #urlpatterns += staticfiles_urlpatterns()
+    #urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
