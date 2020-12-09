@@ -132,10 +132,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [("attachments", os.path.join(BASE_DIR, 'attachments')),]
 
-MEDIA_URL = '/attachments/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments')
+MEDIA_URL = '/attachments/'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
