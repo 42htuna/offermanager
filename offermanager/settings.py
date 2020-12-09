@@ -21,9 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()<>{}'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost',]
+ALLOWED_HOSTS += ['192.168.1.{}'.format(i) for i in range(256)]
+#ALLOWED_HOSTS += ['192.168.{}.{}'.format(i,j) for i in range(256) for j in range(256)]
 
 # Application definition
 INSTALLED_APPS = [
@@ -132,6 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [("attachments", os.path.join(BASE_DIR, 'attachments')),]
