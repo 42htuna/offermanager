@@ -64,7 +64,7 @@ Superuser created successfully.
 
 9. Setting DEBUG
 ```settings.py
-DEBUG = false
+DEBUG = False
 ```
 
 Add "--insecure" for access of static files
