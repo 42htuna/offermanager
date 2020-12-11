@@ -4,10 +4,9 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
-from itertools import chain
-import datetime, time, os
 from django.utils.translation import ugettext_lazy as _
 from offermanager.models import Customer, Offer, OfferItem, Document, DocumentAttachment
+import datetime, time, os
 
 # Create your views here.
 
@@ -21,7 +20,7 @@ def login_view(request):
 		username = request.POST['username']
 		password = request.POST['password']
 		user = authenticate(username=username, password=password)
-		if (user is not None):
+		if user:
 			login(request, user)
 			return HttpResponseRedirect(reverse('index'))
 		else:
@@ -38,7 +37,7 @@ def logout_view(request):
 # List all customers
 @login_required(login_url='login/')
 def customer_list(request):
-	customers = Customer.objects.filter()
+	customers = Customer.objects.order_by('id')
 	context = {'title' : _('Customer List'), 'customers' : customers,}
 	return render(request, 'customers.html', context)
 
@@ -236,7 +235,7 @@ def print_offer_withoutlogo(request, offer_id):
 # Add offeritem to offer
 @login_required(login_url='login/')
 def add_item(request, offer_id):
-	offer = get_object_or_404(Offer, pk=offer_id)
+	offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user)
 	try:
 		i = offer.offeritem_set.create(type=request.POST['type'],
                                        qty=request.POST['qty'],
@@ -254,7 +253,7 @@ def add_item(request, offer_id):
 @login_required(login_url='login/')
 def delete_item(request, offeritem_id, offer_id):
 	item = get_object_or_404(OfferItem, pk=offeritem_id)
-	offer = get_object_or_404(Offer, pk=offer_id)
+	offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user)
 	try:
 		item.delete()
 	except (KeyError, OfferItem.DoesNotExist):
@@ -396,7 +395,7 @@ def delete_document(request, document_id):
 @login_required(login_url='login/')
 def upload_document_attachment(request, document_id):
     myfile = request.FILES['file']
-    document = get_object_or_404(Document, pk=document_id)
+    document = get_object_or_404(Document, pk=document_id, created_by=request.user)
     fs = FileSystemStorage()
     fs.save(myfile.name, myfile)
     e = document.documentattachment_set.create(file=myfile, displayname=myfile.name)
@@ -416,7 +415,7 @@ def upload_document_attachment(request, document_id):
 @login_required(login_url='login/')
 def delete_document_attachment(request, document_id, documentattachment_id):
     documentattachment = get_object_or_404(DocumentAttachment, pk=documentattachment_id)
-    document = get_object_or_404(Document, pk=document_id)
+    document = get_object_or_404(Document, pk=document_id, created_by=request.user)
     try:
         a = documentattachment.file.name
         fs = FileSystemStorage()
@@ -424,7 +423,7 @@ def delete_document_attachment(request, document_id, documentattachment_id):
         z = str(time.asctime())+" ./attachments/"+str(a)+" deleted.\n"
         with open("log.txt", "a") as f:
             f.write(z)
-        documentattachment.delete()
+            documentattachment.delete()
     except (KeyError, DocumentAttachment.DoesNotExist):
         context = {'document': document, 'error_message' : _('Unable to delete attachment!'),}
         return render(request, 'document.html', context)
