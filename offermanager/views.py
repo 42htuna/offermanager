@@ -423,7 +423,7 @@ def delete_document_attachment(request, document_id, documentattachment_id):
         z = str(time.asctime())+" ./attachments/"+str(a)+" deleted.\n"
         with open("log.txt", "a") as f:
             f.write(z)
-            documentattachment.delete()
+        documentattachment.delete()
     except (KeyError, DocumentAttachment.DoesNotExist):
         context = {'document': document, 'error_message' : _('Unable to delete attachment!'),}
         return render(request, 'document.html', context)
