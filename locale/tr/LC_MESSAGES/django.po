@@ -205,7 +205,7 @@ msgstr "Tutar"
 
 #: offermanager/models.py:223 offermanager/templates/document.html:11
 msgid "Document"
-msgstr "Belgeler"
+msgstr "Belge"
 
 #: offermanager/models.py:224 offermanager/templates/base.html:55
 #: offermanager/templates/customers.html:18
@@ -775,3 +775,12 @@ msgstr "Teklif güncellenemiyor!"
 #: offermanager/views.py:422
 msgid "Unable to delete attachment!"
 msgstr "Ek silinemiyor!"
+
+msgid "Offer Stock"
+msgstr "Stok"
+
+msgid "Offer Stocks"
+msgstr "Stoklar"
+
+msgid "Search stock..."
+msgstr "Stok ara..."

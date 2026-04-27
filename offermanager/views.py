@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.utils.translation import ugettext_lazy as _
-from offermanager.models import Customer, Offer, OfferItem, Document, DocumentAttachment
+from offermanager.models import Customer, Offer, OfferItem, Document, DocumentAttachment, OfferStock
 import datetime, time, os
 
 # Create your views here.
@@ -148,7 +148,12 @@ def canceled_offers(request):
 @login_required(login_url='login/')
 def offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
-    context = {'title' : _('Offer ') + str(offer_id), 'offer' : offer,}
+    stocks = OfferStock.objects.all()   
+    context = {
+        'title' : _('Offer ') + str(offer_id), 
+        'offer' : offer,
+        'stocks': stocks,
+    }
     return render(request, 'offer.html', context)
 
 # Search for offer
@@ -197,11 +202,13 @@ def update_offer(request, offer_id):
         offer.status = request.POST['status']
         offer.terms = request.POST['terms']
         offer.save()
+        stocks = OfferStock.objects.all()
     except (KeyError, Offer.DoesNotExist):
         return render(request, 'offer.html', {'offer': offer, 'error_message': _('Unable to update offer!'),})
     else:
-        context = {'confirm_update' : True, 'title' : _('Offer ') + str(offer_id), 'offer' : offer,}
-        return render(request, 'offer.html', context)
+        context = {'confirm_update' : True, 'title' : _('Offer ') + str(offer_id), 'offer' : offer, 'stocks':stocks}
+        #return render(request, 'offer.html', context) # Popup menu active
+        return HttpResponseRedirect(reverse('offer', args=(offer.id,)))
 
 # Delete an offer
 @login_required(login_url='login/')
@@ -235,19 +242,24 @@ def print_offer_withoutlogo(request, offer_id):
 # Add offeritem to offer
 @login_required(login_url='login/')
 def add_item(request, offer_id):
-	offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user)
-	try:
-		i = offer.offeritem_set.create(type=request.POST['type'],
-                                       qty=request.POST['qty'],
-                                       unit=request.POST['unit'],
-                                       cost=request.POST['cost'],
-                                       tax=request.POST['tax'],)
-		i.save()
-	except (KeyError, Offer.DoesNotExist):
-		context = {'offer': offer, 'error_message': _('Not all fields were completed.'),}
-		return render(request, 'offer.html', context)
-	else:
-		return HttpResponseRedirect(reverse('offer', args=(offer.id,)))
+    offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user)
+    try:
+        stock_name = request.POST.get('type', '').strip()
+        if stock_name:
+            OfferStock.objects.get_or_create(type=stock_name)
+        i = offer.offeritem_set.create(
+            type=stock_name,
+            qty=request.POST['qty'],
+            unit=request.POST['unit'],
+            cost=request.POST['cost'],
+            tax=request.POST['tax'],
+        )
+        i.save()
+    except (KeyError, Offer.DoesNotExist):
+        context = {'offer': offer, 'error_message': _('Not all fields were completed.'),}
+        return render(request, 'offer.html', context)
+    else:
+        return HttpResponseRedirect(reverse('offer', args=(offer.id,)))
 
 # Delete offeritem from offer
 @login_required(login_url='login/')

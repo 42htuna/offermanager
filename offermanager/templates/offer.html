@@ -114,7 +114,27 @@
 			{% endfor %}
 			<tr>
 				<td style="width: 40px;"></td>
-				<td style="width: 500px;"><div class="input-group"><input type="text" name="type" required="required" class="form-control form-control-sm"></td></div>
+
+<!-- Search and add stock -->
+<td style="width: 500px;">
+    <div class="input-group">
+        <input type="text" 
+               name="type" 
+               id="stock_name_input" 
+               required="required" 
+               class="form-control form-control-sm" 
+               list="stock_list" 
+               placeholder="{% trans 'Search stock...' %}">
+        
+        <datalist id="stock_list">
+            {% for stock in stocks %}
+                <option value="{{ stock.type }}">
+            {% endfor %}
+        </datalist>
+    </div>
+</td>
+<!-- END Search and add stock -->
+
 				<td style="width: 120px;"><div class="input-group"><input type="number" step="any" name="qty" class="form-control form-control-sm" value=1.00></td></div>
 				<td style="width: 60px;">
 					<select name="unit" class="form-control form-control-sm">
@@ -140,7 +160,7 @@
 					<div class="input-group"><input type="number" step="any" name="cost" class="form-control form-control-sm" value=0.0000 /></div>
 				</td>
 				<td class="text-center" style="width: 60px;">
-					<div class="input-group"><input type="number" step="any" name="tax" class="form-control form-control-sm" value=18 ></div>
+					<div class="input-group"><input type="number" step="any" name="tax" class="form-control form-control-sm" value=20 ></div>
 				</td>
 				<td style="width: 130px;"></td>
 				<td class="text-right" style="width: 70px;">

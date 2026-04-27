@@ -2,7 +2,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from . models import Employee, Customer, Offer, OfferItem, Document, DocumentAttachment
+from . models import Employee, Customer, Offer, OfferItem, Document, DocumentAttachment, OfferStock
 
 # Register your models here.
 class EmployeeInline(admin.TabularInline):
@@ -118,3 +118,8 @@ admin.site.register(User, UserAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Document, DocumentAdmin)
+
+@admin.register(OfferStock)
+class OfferStockAdmin(admin.ModelAdmin):
+    list_display = ('type',)
+    search_fields = ('type',)
