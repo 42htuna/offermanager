@@ -242,3 +242,13 @@ class DocumentAttachment(models.Model):
 	file = models.FileField(upload_to='document/')
 	displayname = models.CharField(max_length=128)
 	document = models.ForeignKey(Document, on_delete=models.CASCADE)
+
+class OfferStock(models.Model):
+    type = models.CharField(_('Stock Name'), max_length=200)
+
+    def __str__(self):
+        return self.type
+
+    class Meta:
+        verbose_name = _('Offer Stock')
+        verbose_name_plural = _('Offer Stocks')
