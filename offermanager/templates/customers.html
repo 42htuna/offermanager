@@ -4,70 +4,105 @@
 
 {% if customers %}
 <div class="card panel-primary">
-	<div class="card-header">{% trans 'Customer list' %}</div>
-		<div class="table-responsive-sm">
-			<table class="table table-sm text-center">
-				<tr class="table-default">
-					<th class="text-left">ID</th>
-					<th class="text-left">{% trans 'Name' %}</th>
-					<th>{% trans 'Offers' %}</th>
-					<th>{% trans 'Draft' %}</th>
-					<th>{% trans 'Approved' %}</th>
-					<th>{% trans 'Unapproved' %}</th>
-					<th>{% trans 'Cancel' %}</th>
-					<th>{% trans 'Documents' %}</th>
-					<th class="text-right">{% trans 'Actions' %}</th>
-				</tr>
-				{% for customer in customers %}
-				<tr>
-					<td class="text-left">{{ customer.id }}</td>
-					<td class="text-left">{{ customer.name }}</td>
-					<td>{{ customer.offers }}</td>
-					<td>{{ customer.draft_offers }}</td>
-					<td>{{ customer.approved_offers }}</td>
-					<td>{{ customer.unapproved_offers }}</td>
-					<td>{{ customer.cancel_offers }}</td>
-					<td>{{ customer.documents }}</td>
-					<td class="text-right">
-		    		<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'customer' customer.id %}">{% trans 'View' %}</a>
-						<a class="btn btn-outline-secondary my-2 my-sm-0 btn-sm" a href="mailto:{{ customer.email }}">{% trans 'Send Email' %}</a>
-						<button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ customer.name }}" data-delete-url="{% url 'delete_customer' customer.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>{% trans 'Customer list' %}</span>
+        <div class="col-sm-4">
+            <input type="text" id="customerSearch" class="form-control form-control-sm" placeholder="{% trans 'Search...' %}">
+        </div>
+    </div>
+    <div class="table-responsive-sm">
+        <table class="table table-sm text-center" id="customerTable">
+            <thead>
+                <tr class="table-default">
+                    <th class="text-left">ID</th>
+                    <th class="text-left">{% trans 'Name' %}</th>
+                    <th>{% trans 'Offers' %}</th>
+                    <th>{% trans 'Draft' %}</th>
+                    <th>{% trans 'Approved' %}</th>
+                    <th>{% trans 'Unapproved' %}</th>
+                    <th>{% trans 'Cancel' %}</th>
+                    <th>{% trans 'Documents' %}</th>
+                    <th class="text-right">{% trans 'Actions' %}</th>
+                </tr>
+            </thead>
+            <tbody id="customerBody">
+                {% for customer in customers %}
+                <tr>
+                    <td class="text-left customer-id">{{ customer.id }}</td>
+                    <td class="text-left customer-name">{{ customer.name }}</td>
+                    <td>{{ customer.offers }}</td>
+                    <td>{{ customer.draft_offers }}</td>
+                    <td>{{ customer.approved_offers }}</td>
+                    <td>{{ customer.unapproved_offers }}</td>
+                    <td>{{ customer.cancel_offers }}</td>
+                    <td>{{ customer.documents }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'customer' customer.id %}">{% trans 'View' %}</a>
+                        <a class="btn btn-outline-secondary my-2 my-sm-0 btn-sm" href="mailto:{{ customer.email }}">{% trans 'Send Email' %}</a>
+                        <button type="button" data-toggle="modal" data-target="#confirmdelete" data-object-name="{{ customer.name }}" data-delete-url="{% url 'delete_customer' customer.id %}" class="btn btn-outline-danger my-2 my-sm-0 btn-sm">{% trans 'Delete' %}</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- Boş sonuç mesajı için gizli satır -->
+                <tr id="noResultsRow" style="display: none;">
+                    <td colspan="9" class="text-center py-4 text-danger font-weight-bold">
+                        <i class="fas fa-search mr-2"></i> {% trans 'Customer record not found!' %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<!-- Delete confirmation modal -->
+<!-- Delete confirmation modal (Aynı Kaldı) -->
 <div class="modal fade" id="confirmdelete" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">{% trans 'Confirm' %}</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
-				<a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{% trans 'Confirm' %}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'No' %}</button>
+                <a href="#" class="btn btn-danger">{% trans 'Yes' %}</a>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script>
-	$(document).ready(function() {
-		$('#confirmdelete').on('show.bs.modal', function(e) {
-			var name = $(e.relatedTarget).data('object-name');
-			var url = $(e.relatedTarget).data('delete-url');
-			$('#confirmdelete .modal-body').html("{% trans 'Are you sure you want to delete? ' %}" + name + "<br><i>{% trans 'This will delete all associated offers, items!' %}</i>");
-			$('#confirmdelete .modal-footer a').attr('href', url);
-		});
-	});
+    $(document).ready(function() {
+        // Arama Fonksiyonu
+        $("#customerSearch").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            var visibleRows = 0;
+
+            $("#customerBody tr:not(#noResultsRow)").filter(function() {
+                var match = $(this).text().toLowerCase().indexOf(value) > -1;
+                $(this).toggle(match);
+                if (match) visibleRows++;
+            });
+
+            // Eğer görünür satır yoksa uyarı satırını göster
+            if (visibleRows === 0) {
+                $("#noResultsRow").show();
+            } else {
+                $("#noResultsRow").hide();
+            }
+        });
+
+        // Silme Onay Modalı
+        $('#confirmdelete').on('show.bs.modal', function(e) {
+            var name = $(e.relatedTarget).data('object-name');
+            var url = $(e.relatedTarget).data('delete-url');
+            $('#confirmdelete .modal-body').html("{% trans 'Are you sure you want to delete? ' %}" + name + "<br><i>{% trans 'This will delete all associated offers, items!' %}</i>");
+            $('#confirmdelete .modal-footer a').attr('href', url);
+        });
+    });
 </script>
-<!-- END delete confirmation modal -->
 
 {% else %}
 <div class="alert alert-info">{% trans 'No customers!' %}</div>

@@ -5,35 +5,74 @@
 {% if offer_list %}
 <!-- Default offer list, show 25 recent offers -->
 <div class="card card-primary">
-	<div class="card-header">{% if title %}{{ title }}{% else %}{% trans 'Offers' %}{% endif %}</div>
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<span>{% if title %}{{ title }}{% else %}{% trans 'Offers' %}{% endif %}</span>
+		<div class="col-sm-4">
+			<input type="text" id="offerSearch" class="form-control form-control-sm" placeholder="{% trans 'Search...' %}">
+		</div>
+	</div>
 	<div class="table-responsive-sm text-right">
-	<table class="table table-sm">
-		<tr class="table-default">
-			<th class="text-left">ID</th>
-			<th class="text-left">{% trans 'Customer' %}</th>
-			<th class="text-center">{% trans 'Date' %}</th>
-			<th>{% trans 'Sub Total' %}</th>
-			<th>{% trans 'Tax Total' %}</th>
-			<th>{% trans 'General Total' %}</th>
-			<th>{% trans 'Actions' %}</th>
-		</tr>
-		{% for offer in offer_list %}
-		<tr>
-			<td class="text-left">{{ offer.id }}</td>
-			<td class="text-left">{{ offer.customer }}</td>
-			<td class="text-center">{{ offer.date|date:"DATE_FORMAT" }}</td>
-			<td>{{ offer.total_items }} TL</td>
-			<td>{{ offer.total_tax }} TL</td>
-			<td>{{ offer.total }} TL</td>
-			<td>
-				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'offer' offer.id %}" target="_new">{% trans 'View' %}</a>
-				<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'customer' offer.customer.id %}" target="_new">{% trans 'Customer' %}</a>
-			</td>
-		</tr>
-		{% endfor %}
+	<table class="table table-sm" id="offerTable">
+		<thead>
+			<tr class="table-default">
+				<th class="text-left">ID</th>
+				<th class="text-left">{% trans 'Customer' %}</th>
+				<th class="text-center">{% trans 'Date' %}</th>
+				<th>{% trans 'Sub Total' %}</th>
+				<th>{% trans 'Tax Total' %}</th>
+				<th>{% trans 'General Total' %}</th>
+				<th>{% trans 'Actions' %}</th>
+			</tr>
+		</thead>
+		<tbody id="offerBody">
+			{% for offer in offer_list %}
+			<tr>
+				<td class="text-left customer-id">{{ offer.id }}</td>
+                <td class="text-left customer-name">{{ offer.customer }}</td>
+				<td class="text-center">{{ offer.date|date:"DATE_FORMAT" }}</td>
+				<td>{{ offer.total_items }} TL</td>
+				<td>{{ offer.total_tax }} TL</td>
+				<td>{{ offer.total }} TL</td>
+				<td>
+					<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'offer' offer.id %}" target="_new">{% trans 'View' %}</a>
+					<a class="btn btn-outline-primary my-2 my-sm-0 btn-sm" href="{% url 'customer' offer.customer.id %}" target="_new">{% trans 'Customer' %}</a>
+				</td>
+			</tr>
+			{% endfor %}
+			<!-- Boş sonuç mesajı için gizli satır -->
+			<tr id="noResultsRow" style="display: none;">
+				<td colspan="7" class="text-center py-4 text-danger font-weight-bold">
+					<i class="fas fa-search mr-2"></i> {% trans 'Offer record not found!' %}
+				</td>
+			</tr>
+		</tbody>
 	</table>
 	</div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Eğer base.html içinde jQuery yüklü değilse aktif edebilirsin -->
+<script>
+	$(document).ready(function() {
+		// Arama Fonksiyonu
+		$("#offerSearch").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			var visibleRows = 0;
+
+			$("#offerBody tr:not(#noResultsRow)").filter(function() {
+				var match = $(this).text().toLowerCase().indexOf(value) > -1;
+				$(this).toggle(match);
+				if (match) visibleRows++;
+			});
+
+			// Eğer görünür satır yoksa uyarı satırını göster
+			if (visibleRows === 0) {
+				$("#noResultsRow").show();
+			} else {
+				$("#noResultsRow").hide();
+			}
+		});
+	});
+</script>
 
 {% else %}
 <div class="alert alert-info">{% trans 'No offers!' %}</div>
