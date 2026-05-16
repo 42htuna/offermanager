@@ -784,3 +784,21 @@ msgstr "Stoklar"
 
 msgid "Search stock..."
 msgstr "Stok ara..."
+
+msgid "Offer record not found!"
+msgstr "Teklif kaydı bulunamadı!"
+
+msgid "Document record not found!"
+msgstr "Belge kaydı bulunamadı!"
+
+msgid "Customer record not found!"
+msgstr "Müşteri kaydı bulunamadı!"
+
+msgid "Searching..."
+msgstr "Aranıyor..."
+
+msgid "Search..."
+msgstr "Ara..."
+
+msgid "SNot found!"
+msgstr "Bulunamadı!"

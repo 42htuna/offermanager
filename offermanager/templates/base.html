@@ -13,7 +13,6 @@
 	{% else %}
 	<title>{% trans 'Offer Manager' %}</title>
 	{% endif %}
-
 	<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 	<script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -117,6 +116,77 @@
 {% block content %}
 {% endblock %}
 	</div>
+    
+<script>
+	$(document).ready(function() {
+		// --- 1. TABLOLAR İÇİN ORTAK ARAMA ---
+		$("#customerSearch, #offerSearch, #documentSearch").on("keyup", function() {
+			var value = $(this).val().trim().toLowerCase();
+			var visibleRows = 0;
+			var $tbody = $(this).closest('.card').find('tbody');
+			var $noResultsRow = $tbody.find('#noResultsRow');
 
+			$tbody.find("tr:not(#noResultsRow)").each(function() {
+				var rowId = $(this).find(".customer-id").text().trim().toLowerCase();
+				var rowName = $(this).find(".customer-name").text().trim().toLowerCase();
+				var match = false;
+
+				if (value !== "") {
+					if (value.includes('%')) {
+						match = new RegExp("^" + value.replace(/%/g, ".*") + "$").test(rowId);
+					} else if (/^\d+$/.test(value)) {
+						match = (rowId === value);
+					} else {
+						match = (rowName.indexOf(value) > -1);
+					}
+				} else { match = true; }
+
+				$(this).toggle(match);
+				if (match) visibleRows++;
+			});
+
+			if (visibleRows === 0) { $noResultsRow.show(); } else { $noResultsRow.hide(); }
+		});
+
+		// --- 2. SELECT2 KUTULARI İÇİN ORTAK ARAMA ---
+		$('[data-smart-search="true"]').id_and_name_filter(); 
+	});
+
+	// Select2 için kilitlenmeyi önleyen güncel eklenti kodu
+	$.fn.id_and_name_filter = function() {
+		return this.each(function() {
+			var $el = $(this); // Element bağlamını güvenli bir değişkende saklıyoruz
+			
+			// HTML etiketindeki data niteliklerinden metinleri güvenle alıyoruz
+			var noResultsText = $el.data('no-results-text') || "Not found";
+			var searchingText = $el.data('searching-text') || "Searching...";
+
+			$el.select2({
+				placeholder: $el.data('placeholder') || "",
+				allowClear: true,
+				width: '100%',
+				matcher: function(params, data) {
+					if ($.trim(params.term) === '' || data.id === 'None') return data;
+					var value = params.term.trim().toLowerCase();
+					var optionId = $(data.element).data('id') ? $(data.element).data('id').toString().trim().toLowerCase() : '';
+					var optionName = $(data.element).data('name') ? $(data.element).data('name').toString().trim().toLowerCase() : '';
+
+					if (value.includes('%')) {
+						if (new RegExp("^" + value.replace(/%/g, ".*") + "$").test(optionId)) return data;
+					} else if (/^\d+$/.test(value)) {
+						if (optionId === value) return data;
+					} else {
+						if (optionName.indexOf(value) > -1) return data;
+					}
+					return null;
+				},
+				language: {
+					noResults: function() { return noResultsText; }, // Değişkeni doğrudan döndürerek takılmayı çözdük
+					searching: function() { return searchingText; }
+				}
+			});
+		});
+	};
+</script>
 </body>
 </html>

@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% load i18n %}
+
 {% block content %}
+
+<!-- Select2 için gerekli CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    /* Tasarımı iyileştirmek için küçük bir düzeltme */
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        border: 1px solid #ced4da;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 36px;
+    }
+    .select2-results__message {
+        color: #D90011 !important; /* Soft bir kırmızı */
+    }
+</style>
 
 {% if error_message %}
 <div class="alert alert-warning">{{ error_message }}</div>
@@ -8,31 +25,43 @@
 
 {% if customer_list %}
 <form method="POST" action="{% url 'new_document' %}" name="customer" class="form-default">
-	{% csrf_token %}
-	<div class="card card-primary">
-		<div class="card-header">{% trans 'Select Customer' %}</div>
-		<div class="card-body">
-			<div class="form-group">
-				<label class="col-sm-3 control-label">{% trans 'Customer : ' %}</label>
-				<div class="col-sm-6">
-					<select class="form-control" name="customer_id">
-						<option value="None">{% trans '(Select)' %}</option>
-						{% for customer in customer_list %}
-						<option value="{{ customer.id }}">{{ customer.name }}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</div>
-		</div>
-		<div class="card-footer">
-			<a href="{% url 'new_customer' %}" class="btn btn-default my-2 my-sm-0 btn-sm">{% trans 'Add New Customer' %}</a>
-			<input class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Create Document' %}">
-		</div>
-	</div>
+    {% csrf_token %}
+    <div class="card card-primary">
+        <div class="card-header">{% trans 'Select Customer' %}</div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">{% trans 'Customer : ' %}</label>
+                <div class="col-sm-6">
+                    <!-- data nitelikleri ile base.html'deki akıllı sisteme bağladık -->
+                    <select class="form-control" name="customer_id" id="customer_select"
+                            data-smart-search="true"
+                            data-placeholder="{% trans '(Select)' %}"
+                            data-no-results-text="{% trans 'Document record not found!' %}"
+                            data-searching-text="{% trans 'Searching...' %}">
+                        <option value="None">{% trans '(Select)' %}</option>
+                        {% for customer in customer_list %}
+                        <!-- data-id ve data-name nitelikleri eklendi -->
+                        <option value="{{ customer.id }}" data-id="{{ customer.id }}" data-name="{{ customer.name | lower }}">
+                            {{ customer.name }} - ID: ({{ customer.id }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'new_customer' %}" class="btn btn-default my-2 my-sm-0 btn-sm">{% trans 'Add New Customer' %}</a>
+            <input class="btn btn-outline-primary my-2 my-sm-0 btn-sm" type="submit" value="{% trans 'Create Document' %}">
+        </div>
+    </div>
 </form>
 
 {% else %}
 <div class="alert alert-info">{% trans 'No customers!' %}</div>
 {% endif %}
+
+<!-- jQuery ve Select2 JS (Özel script yazmıyoruz, sadece kütüphaneleri çağırıyoruz) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 {% endblock %}
