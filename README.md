@@ -72,7 +72,7 @@ Add "--insecure" for access of static files
 /opt/offermanager$ sudo python3 manage.py runserver 0.0.0.0:8000 --insecure
 ```
 With Gunicorn:
-
+```bash
 gunicorn offermanager.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 90
 ```
 
