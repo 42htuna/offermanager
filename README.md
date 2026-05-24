@@ -73,6 +73,9 @@ Add "--insecure" for access of static files
 ```
 With Gunicorn:
 ```bash
+python manage.py collectstatic --noinput
+```
+```bash
 gunicorn offermanager.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 90
 ```
 
