@@ -137,12 +137,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [("attachments", os.path.join(BASE_DIR, 'attachments')),]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments')
+STATICFILES_DIRS = [
+    #os.path.join(BASE_DIR, 'offermanager', 'static'), #Bu satırı boşa çıktığı için silebilirsiniz
+]
+
 MEDIA_URL = '/attachments/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments')
+
+REQUIRED_DIRECTORIES = [
+    os.path.join(BASE_DIR, 'attachments'),
+    os.path.join(BASE_DIR, 'attachments','document'),
+    os.path.join(BASE_DIR, 'data'),
+]
+
+for directory in REQUIRED_DIRECTORIES:
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
