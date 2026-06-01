@@ -149,7 +149,6 @@ MEDIA_URL = '/attachments/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments')
 
 REQUIRED_DIRECTORIES = [
-    os.path.join(BASE_DIR, 'attachments'),
     os.path.join(BASE_DIR, 'attachments','document'),
     os.path.join(BASE_DIR, 'data'),
 ]
