@@ -3,5 +3,9 @@ __pycache__/
 *.pyc
 db.sqlite3
 .env
+migrations/
 staticfiles/
+attachments/
+data/
 .python-version
+log.txt

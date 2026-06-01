@@ -21,9 +21,9 @@ $ sudo apt-get install python3 python3-pip
 $ sudo -H pip install --upgrade pip
 ```
 
-3. Install Django
+3. Install requirements.txt
 ```bash
-$ pip install django
+$ pip install -r requirements.txt
 ```
 
 4. Download OfferManager from Github repo. Optionally, download the Zip file from https://github.com/42htuna/offermanager/archive/master.zip
@@ -44,12 +44,18 @@ TIME_ZONE = 'UTC'
 
 6. Create the application database
 ```bash
-/opt/offermanager$ sudo python3 manage.py migrate
+python manage.py makemigrations offermanager
+```
+```bash
+python manage.py makemigrations
+```
+```bash
+python manage.py migrate
 ```
 
 7. Create an admin user
 ```bash
-/opt/offermanager$ sudo python3 manage.py createsuperuser
+python manage.py createsuperuser
 Username (leave blank to use 'root'): admin
 Email address: admin@home.local
 Password:
@@ -59,7 +65,7 @@ Superuser created successfully.
 
 8. At this point, you should have enough configured to run the app using Python's development server. Run the following command and browse to http://localhost:8000
 ```bash
-/opt/offermanager$ sudo python3 manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000
 ```
 
 9. Setting DEBUG
@@ -69,7 +75,7 @@ DEBUG = False
 
 Add "--insecure" for access of static files
 ```bash
-/opt/offermanager$ sudo python3 manage.py runserver 0.0.0.0:8000 --insecure
+python manage.py runserver 0.0.0.0:8000 --insecure
 ```
 With Gunicorn:
 ```bash

@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import include
 from offermanager import views
 from django.conf import settings
+from django.views.static import serve
 
 app_name = "offermanager"
 
@@ -90,3 +91,7 @@ if settings.DEBUG:
     # serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+    path('attachments/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+]
