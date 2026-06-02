@@ -77,12 +77,21 @@ Add "--insecure" for access of static files
 ```bash
 python manage.py runserver 0.0.0.0:8000 --insecure
 ```
+
 With Gunicorn:
 ```bash
 python manage.py collectstatic --noinput
 ```
 ```bash
 gunicorn offermanager.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 90
+```
+
+With Waitress:
+```bash
+python manage.py collectstatic --noinput
+```
+```bash
+waitress-serve --port=8000 offermanager.wsgi:application
 ```
 
 10. Setting ALLOWED_HOSTS
