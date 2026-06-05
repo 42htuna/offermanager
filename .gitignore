@@ -9,3 +9,8 @@ data/
 .python-version
 log.txt
 devir_verisi.json
+
+# Yıl sonu devir yedekleri
+devir_verisi.json
+yilsonu_devir.json
+*.json
