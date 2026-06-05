@@ -202,7 +202,7 @@ $ sudo service apache2 restart
 
 ## 🔄 Yıl Sonu Devir İşlemleri (Veri Aktarımı)
 
-Mevcut sistemdeki **Stok** ve **Müşteri** tablolarını, projenin temel yapısını bozmadan yeni
+Mevcut sistemdeki **Kullanıcı**, **Çalışan**, **Stok** ve **Müşteri** tablolarını, projenin temel yapısını bozmadan yeni
 veritabanına aktarmak için aşağıdaki iki yöntemden biri kullanılabilir.
 
 ---
@@ -217,12 +217,11 @@ Eski veritabanınız aktifken terminalde aşağıdaki komutu çalıştırarak st
 verilerini JSON formatında yedekleyin:
 
 ```bash
-python manage.py dumpdata offermanager.OfferStock offermanager.Customer -o devir_verisi.json --indent 4
+python manage.py dumpdata auth.user offermanager.employee offermanager.OfferStock offermanager.Customer -o devir_verisi.json --indent 4
 ```
 
 #### 2. Verileri İçe Aktarma (Yeni/Boş Veritabanında)
-Yeni veritabanına geçiş yapıp "python manage.py migrate" çalıştırdıktan ve "python manage.py createsuperuser"
-ile bir kullanıcı ekledikden sonra verileri doğrudan içeri yükleyin:
+Yeni veritabanına geçiş yapıp "python manage.py migrate" çalıştırdıktan sonra verileri doğrudan içeri yükleyin:
 
 ```bash
 python manage.py loaddata devir_verisi.json
@@ -241,8 +240,7 @@ python manage.py devir_export
 ```
 
 #### Yeni Veritabanında İçe Aktarma:
-Yeni veritabanına geçip migrate ve kullanıcı ekleme işlemlerini tamamladıktan sonra
-verileri direkt içeri basmak için:
+Yeni veritabanına geçip migrate işlemlerini tamamladıktan sonra verileri direkt içeri basmak için:
 
 ```bash
 python manage.py devir_import
