@@ -197,3 +197,64 @@ WSGIPythonPath /opt/offermanager
 ```bash
 $ sudo service apache2 restart
 ```
+
+## 🔄 Yıl Sonu Devir İşlemleri (Veri Aktarımı)
+
+Mevcut sistemdeki **Stok** ve **Müşteri** tablolarını, projenin temel yapısını bozmadan yeni
+veritabanına aktarmak için aşağıdaki iki yöntemden biri kullanılabilir.
+
+---
+
+### Yöntem 1: Yerleşik Django Fixtures (Hızlı / Kodsuz Yöntem)
+
+Herhangi bir kod değişikliği yapmadan, tamamen Django'nun yerleşik `dumpdata` ve `loaddata`
+mekanizmasını kullanan pratik yöntemdir.
+
+#### 1. Verileri Dışarı Aktarma (Eski/Dolu Veritabanında)
+Eski veritabanınız aktifken terminalde aşağıdaki komutu çalıştırarak stok ve müşteri
+verilerini JSON formatında yedekleyin:
+
+```bash
+python manage.py dumpdata offermanager.OfferStock offermanager.Customer -o devir_verisi.json --indent 4
+```
+
+#### 2. Verileri İçe Aktarma (Yeni/Boş Veritabanında)
+Yeni veritabanına geçiş yapıp "python manage.py migrate" çalıştırdıktan ve "python manage.py createsuperuser"
+ile bir kullanıcı ekledikden sonra verileri doğrudan içeri yükleyin:
+
+'''Bash
+python manage.py loaddata devir_verisi.json
+'''
+
+### Yöntem 2: Özel Yönetim Komutları (Custom Management Commands)
+Proje içine gömülü, veritabanı kısıtlamalarını (Foreign Key denetimlerini) geçici olarak bypass ederek
+verileri esnek bir şekilde içeri basan yöntemdir.
+
+Klasör Mimarisi
+Komutların Django tarafından tanınması için ilgili uygulamanın altında şu yapının kurulmuş olması gerekir:
+
+###Plaintext
+offermanager/
+└── [uygulama_adı]/
+    └── management/
+        └── commands/
+            ├── __init__.py
+            ├── devir_export.py
+            └── devir_import.py
+
+###Kullanım Adımları
+
+#### Eski Veritabanında Dışa Aktarma:
+Terminalde tek bir komutla ilgili tabloları yilsonu_devir.json adıyla dışarı aktarın:
+
+'''Bash
+python manage.py devir_export
+'''
+
+#### Yeni Veritabanında İçe Aktarma:
+Yeni veritabanına geçip migrate ve kullanıcı ekleme işlemlerini tamamladıktan sonra
+verileri direkt içeri basmak için:
+
+'''Bash
+python manage.py devir_import
+'''
