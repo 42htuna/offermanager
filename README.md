@@ -198,6 +198,8 @@ WSGIPythonPath /opt/offermanager
 $ sudo service apache2 restart
 ```
 
+---
+
 ## 🔄 Yıl Sonu Devir İşlemleri (Veri Aktarımı)
 
 Mevcut sistemdeki **Stok** ve **Müşteri** tablolarını, projenin temel yapısını bozmadan yeni
@@ -222,39 +224,27 @@ python manage.py dumpdata offermanager.OfferStock offermanager.Customer -o devir
 Yeni veritabanına geçiş yapıp "python manage.py migrate" çalıştırdıktan ve "python manage.py createsuperuser"
 ile bir kullanıcı ekledikden sonra verileri doğrudan içeri yükleyin:
 
-'''Bash
+```bash
 python manage.py loaddata devir_verisi.json
-'''
+```
+---
 
 ### Yöntem 2: Özel Yönetim Komutları (Custom Management Commands)
 Proje içine gömülü, veritabanı kısıtlamalarını (Foreign Key denetimlerini) geçici olarak bypass ederek
 verileri esnek bir şekilde içeri basan yöntemdir.
 
-Klasör Mimarisi
-Komutların Django tarafından tanınması için ilgili uygulamanın altında şu yapının kurulmuş olması gerekir:
-
-###Plaintext
-offermanager/
-└── [uygulama_adı]/
-    └── management/
-        └── commands/
-            ├── __init__.py
-            ├── devir_export.py
-            └── devir_import.py
-
-###Kullanım Adımları
-
 #### Eski Veritabanında Dışa Aktarma:
 Terminalde tek bir komutla ilgili tabloları yilsonu_devir.json adıyla dışarı aktarın:
 
-'''Bash
+```bash
 python manage.py devir_export
-'''
+```
 
 #### Yeni Veritabanında İçe Aktarma:
 Yeni veritabanına geçip migrate ve kullanıcı ekleme işlemlerini tamamladıktan sonra
 verileri direkt içeri basmak için:
 
-'''Bash
+```bash
 python manage.py devir_import
-'''
+```
+---
