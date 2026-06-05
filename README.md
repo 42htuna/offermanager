@@ -233,7 +233,7 @@ Proje içine gömülü, veritabanı kısıtlamalarını (Foreign Key denetimleri
 verileri esnek bir şekilde içeri basan yöntemdir.
 
 #### Eski Veritabanında Dışa Aktarma:
-Terminalde tek bir komutla ilgili tabloları yilsonu_devir.json adıyla dışarı aktarın:
+Terminalde tek bir komutla ilgili tabloları **devir_verisi.json** adıyla dışarı aktarın:
 
 ```bash
 python manage.py devir_export
