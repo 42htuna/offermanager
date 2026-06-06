@@ -1,5 +1,6 @@
 # REQUIREMENTS:
-# Python Version: 3.9.1
+# Django 3.1 ailesinin son sürümü: 3.1.14
+# Django 3.1'in desteklediği son Python sürümü: 3.9.21
 
 django==3.1.14
 waitress==3.0.2
