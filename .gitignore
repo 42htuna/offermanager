@@ -6,10 +6,7 @@ db.sqlite3
 staticfiles/
 attachments/
 data/
-.python-version
 log.txt
 
-# Yıl sonu devir yedekleri
 devir_verisi.json
-yilsonu_devir.json
 *.json

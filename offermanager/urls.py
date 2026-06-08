@@ -19,6 +19,7 @@ from django.conf.urls import include
 from offermanager import views
 from django.conf import settings
 from django.views.static import serve
+from django.views.generic.base import RedirectView
 
 app_name = "offermanager"
 
@@ -94,4 +95,7 @@ if settings.DEBUG:
 
 urlpatterns += [
     path('attachments/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+        
+    # Tarayıcı /favicon.ico istediğinde statik klasöründeki logoya yönlendirir
+    path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico')),
 ]
