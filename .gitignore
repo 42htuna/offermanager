@@ -7,6 +7,5 @@ staticfiles/
 attachments/
 data/
 log.txt
-
 devir_verisi.json
 *.json
