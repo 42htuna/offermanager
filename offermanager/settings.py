@@ -141,9 +141,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [
-    #os.path.join(BASE_DIR, 'offermanager', 'static'), #Bu satırı boşa çıktığı için silebilirsiniz
-]
+STATICFILES_DIRS = []
 
 MEDIA_URL = '/attachments/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments')
