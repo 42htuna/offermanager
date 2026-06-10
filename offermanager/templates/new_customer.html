@@ -12,31 +12,31 @@
 		<div class="card-header text-center">{% trans 'New Customer' %}</div>
 		<div class="card-body">
 			<div class="row">
-			<div class="col-sm-6">
-			<div class="form-group">
-				<label class="col-sm-12 control-label">{% trans 'Title : ' %}</label>
-				<input type="text" class="form-control" name="name" required="required" placeholder="{% trans 'Customer name' %}"/>
-			</div>
-			</div>
-			<div class="col-sm-3">
-			<div class="form-group">
-				<label class="col-sm-12 control-label">{% trans 'Phone : ' %}</label>
-				<input type="text" class="form-control" name="phone" placeholder="{% trans 'Phone' %}"/>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-12 control-label">{% trans 'Title : ' %}</label>
+						<input type="text" class="form-control" name="name" required="required" placeholder="{% trans 'Customer name' %}" value="{{ post_data.name }}"/>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label class="col-sm-12 control-label">{% trans 'Phone : ' %}</label>
+						<input type="text" class="form-control" name="phone" placeholder="{% trans 'Phone' %}" value="{{ post_data.phone }}"/>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-12 control-label">{% trans 'Address : ' %}</label>
+						<textarea class="form-control" name="address" placeholder="{% trans 'Address' %}" rows="3">{% if post_data %}{{ post_data.address }}{% endif %}</textarea>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group">
+						<label class="col-sm-12 control-label">{% trans 'E Mail : ' %}</label>
+						<input type="email" class="form-control" name="email" placeholder="mail@mail.com" value="{{ post_data.email }}"/>
+					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
-			<div class="form-group">
-				<label class="col-sm-12 control-label">{% trans 'Address : ' %}</label>
-				<textarea type="text" class="form-control" name="address" placeholder="{% trans 'Address' %}" rows="3"></textarea>
-				</div>
-			</div>
-			<div class="col-sm-3">
-			<div class="form-group">
-				<label class="col-sm-12 control-label">{% trans 'E Mail : ' %}</label>
-				<input type="text" class="form-control" name="email" placeholder="mail@mail.com"/>
-				</div>
-			</div>
-		</div>
 		</div>
 		<div class="card-footer text-center">
 			<input type="submit" name="savecreate" value="{% trans 'Save & Create Offer' %}" class="btn btn-outline-primary my-2 my-sm-0 btn-sm">

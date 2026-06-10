@@ -26,7 +26,7 @@ class Employee(models.Model):
         return '%s %s - %s' %(self.user.first_name, self.user.last_name, self.phone)
 
 class Customer(models.Model):
-    name = models.CharField(_('Customer Name'), max_length=64)
+    name = models.CharField(_('Customer Name'), max_length=64, unique=True)
     address = models.CharField(_('Address'), max_length=128, blank=True)
     phone = models.CharField(_('Phone'), max_length=16, blank=True)
     email = models.EmailField(_('E Mail'), max_length=48, blank=True)

@@ -7,6 +7,7 @@ from django.core.files.storage import FileSystemStorage
 from django.utils.translation import ugettext_lazy as _
 from offermanager.models import Customer, Offer, OfferItem, Document, DocumentAttachment, OfferStock
 import datetime, time, os
+from django.contrib import messages
 
 # Create your views here.
 
@@ -57,13 +58,23 @@ def customer(request, customer_id):
 @login_required(login_url='login/')
 def new_customer(request):
     if request.method == 'POST':
-        c = Customer(name=request.POST['name'],
+        name_input = request.POST['name'].strip()
+        
+        if Customer.objects.filter(name__iexact=name_input).exists():
+            context = {
+                'error_message': f"'{name_input}' isimli bir müşteri zaten kayıtlı!",
+                'post_data': request.POST
+            }
+            return render(request, 'new_customer.html', context)
+            
+        c = Customer(name=name_input,
                      address=request.POST['address'],
                      phone=request.POST['phone'],
                      email=request.POST['email'],
                      created_by=request.user,
                      updated_by=request.user)
         c.save()
+        
         if 'savecreate' in request.POST:
             i = Offer(customer=c, created_by=request.user, updated_by=request.user)
             i.save()
@@ -75,19 +86,32 @@ def new_customer(request):
         else:
             return HttpResponseRedirect(reverse('customer_list'))
     else:
-	       return render(request, 'new_customer.html')
+        return render(request, 'new_customer.html')
 
 # Update customer
 @login_required(login_url='login/')
 def update_customer(request, customer_id):
     c = get_object_or_404(Customer, pk=customer_id)
-    c.name = request.POST['name']
-    c.address = request.POST['address']
-    c.phone = request.POST['phone']
-    c.email = request.POST['email']
-    c.updated_by = request.user
-    c.save()
-    return HttpResponseRedirect(reverse('customer', args=(c.id,)))
+    
+    if request.method == 'POST':
+        name_input = request.POST['name'].strip()
+        
+        if Customer.objects.filter(name__iexact=name_input).exclude(pk=customer_id).exists():
+            
+            context = {
+                'customer': c,
+                'error_message': f"'{name_input}' ismi başka bir müşteri tarafından kullanılıyor!"
+            }
+            return render(request, 'customer.html', context)
+            
+        c.name = name_input
+        c.address = request.POST['address']
+        c.phone = request.POST['phone']
+        c.email = request.POST['email']
+        c.updated_by = request.user
+        c.save()
+        
+        return HttpResponseRedirect(reverse('customer', args=(c.id,)))
 
 # Delete customer
 @login_required(login_url='login/')
