@@ -83,7 +83,7 @@ python manage.py collectstatic --noinput
 ```bash
 gunicorn offermanager.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 90
 ```
-Waitress ile çalıştırmak için:
+Waitress ile çalıştırmak için (Windows için en iyi alternatif):
 ```bash
 python manage.py collectstatic --noinput
 ```
