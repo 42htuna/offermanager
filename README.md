@@ -1,59 +1,61 @@
 # offermanager
-Python (Django) offer and customer management app
+Python (Django) teklif ve müşteri yönetim uygulaması[cite: 1]
 
-### Requirements
-* pip (to install python packages)
-* django
+### Gereksinimler
+* pip (Python paketlerini yüklemek için)[cite: 1]
+* django[cite: 1]
 
-### Basic Installation
-* This guide assumes Debian/Ubuntu is the running OS. Administrative rights are obtained using **sudo**.
-* RPM-based systems should be similar. Windows is theoretically possible but untested.
-* The application will be installed to **/opt/offermanager**
-* Basic installation will get the application up and running, however it is not suitable for production use.
+### Temel Kurulum
+* Bu kılavuz, işletim sistemi olarak Debian/Ubuntu kullanıldığını varsayar. Yönetici yetkileri **sudo** kullanılarak alınır.[cite: 1]
+* RPM tabanlı sistemler de benzer olmalıdır. Windows teorik olarak mümkündür ancak test edilmemiştir.[cite: 1]
+* Uygulama **/opt/offermanager** dizinine kurulacaktır.[cite: 1]
+* Temel kurulum, uygulamayı çalışır hale getirecektir ancak canlı ortam (production) kullanımı için uygun değildir.[cite: 1]
 
-1. Install pip
+1. pip kurulumunu yapın:
 ```bash
 $ sudo apt-get install python3 python3-pip
-```
+```[cite: 1]
 
-2. Update pip to latest version (using sudo with pip requires the -H flag)
+2. pip'i en son sürüme güncelleyin (pip ile sudo kullanırken -H bayrağı gereklidir):
 ```bash
 $ sudo -H pip install --upgrade pip
-```
+```[cite: 1]
 
-3. Install requirements.txt
+3. requirements.txt dosyasındaki bağımlılıkları yükleyin:
 ```bash
 $ pip install -r requirements.txt
-```
+```[cite: 1]
 
-4. Download OfferManager from Github repo. Optionally, download the Zip file from https://github.com/42htuna/offermanager/archive/master.zip
+4. OfferManager'ı Github deposundan indirin. İsteğe bağlı olarak, Zip dosyasını https://github.com/42htuna/offermanager/archive/master.zip adresinden de indirebilirsiniz:
 ```bash
-$ git clone https://github.com/42htuna/offermanager --branch master
+$ git clone [https://github.com/42htuna/offermanager](https://github.com/42htuna/offermanager) --branch master
 $ sudo cp -r offermanager /opt
 $ cd /opt/offermanager
-```
+```[cite: 1]
 
-5. Edit the following lines of offermanager/settings.py to match your environment
+5. Ortamınıza uygun şekilde `offermanager/settings.py` dosyasındaki aşağıdaki satırları düzenleyin:
 ```python
-#  Put a random string at least 50 characters long here. This will keep hashed passwords safe.
+# Buraya en az 50 karakter uzunluğunda rastgele bir metin girin. Bu, özetlenmiş (hashed) şifreleri güvende tutacaktır.
 SECRET_KEY = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()<>{}'
 
-# Set to match system time
+# Sistem saatiyle eşleşecek şekilde ayarlayın
 TIME_ZONE = 'UTC'
-```
+```[cite: 1]
 
-6. Create the application database
+6. Uygulama veritabanını oluşturun:
 ```bash
 python manage.py makemigrations offermanager
-```
+```[cite: 1]
+
 ```bash
 python manage.py makemigrations
-```
+```[cite: 1]
+
 ```bash
 python manage.py migrate
-```
+```[cite: 1]
 
-7. Create an admin user
+7. Bir yönetici (admin) kullanıcısı oluşturun:
 ```bash
 python manage.py createsuperuser
 Username (leave blank to use 'root'): admin
@@ -61,70 +63,72 @@ Email address: admin@home.local
 Password:
 Password (again):
 Superuser created successfully.
-```
+```[cite: 1]
 
-8. At this point, you should have enough configured to run the app using Python's development server. Run the following command and browse to http://localhost:8000
+8. Bu aşamada, uygulamayı Python'un geliştirme sunucusuyla çalıştırmak için yeterli yapılandırmaya sahip olmalısınız. Aşağıdaki komutu çalıştırın ve tarayıcınızdan http://localhost:8000 adresine gidin:
 ```bash
 python manage.py runserver 0.0.0.0:8000
-```
+```[cite: 1]
 
-9. Setting DEBUG
+9. DEBUG Ayarı:
 ```settings.py
 DEBUG = False
-```
+```[cite: 1]
 
-Add "--insecure" for access of static files
+Statik dosyalara erişebilmek için "--insecure" parametresini ekleyin:
 ```bash
 python manage.py runserver 0.0.0.0:8000 --insecure
-```
+```[cite: 1]
 
-With Gunicorn:
+Gunicorn ile çalıştırmak için:
 ```bash
 python manage.py collectstatic --noinput
-```
+```[cite: 1]
+
 ```bash
 gunicorn offermanager.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 90
-```
+```[cite: 1]
 
-With Waitress:
+Waitress ile çalıştırmak için:
 ```bash
 python manage.py collectstatic --noinput
-```
+```[cite: 1]
+
 ```bash
 waitress-serve --port=8000 offermanager.wsgi:application
-```
+```[cite: 1]
 
-10. Setting ALLOWED_HOSTS
+10. ALLOWED_HOSTS Ayarı:
 ```settings.py
 ALLOWED_HOSTS = ['127.0.0.1','localhost',]
 ALLOWED_HOSTS += ['192.168.1.{}'.format(i) for i in range(256)]
 #ALLOWED_HOSTS += ['192.168.{}.{}'.format(i,j) for i in range(256) for j in range(256)]
-```
+```[cite: 1]
 
-### Using MySQL instead of SQLite3
-1. Install MySQL client and Python MySQL driver
+### SQLite3 Yerine MySQL Kullanımı
+1. MySQL istemcisini ve Python MySQL sürücüsünü yükleyin:
 ```bash
 $ sudo apt-get install mariadb-client
 $ sudo -H pip install mysqlclient
-```
+```[cite: 1]
 
-2. Create the MySQL database and user
+2. MySQL veritabanını ve kullanıcısını oluşturun:
 ```bash
 $ mysql -u root -p [-h servername]
-```
+```[cite: 1]
+
 ```sql
 create database 'offermanager';
 grant all on 'offermanager'.* to 'offermanager'@'%' identified by 'mysecretpassword';
 exit;
-```
+```[cite: 1]
 
-4. Update offermanager/settings.py. Find the 'DATABASES' section, comment the sqlite database settings and uncomment the mysql settings.
+4. `offermanager/settings.py` dosyasını güncelleyin. 'DATABASES' bölümünü bulun, sqlite veritabanı ayarlarını yorum satırı yapın ve mysql ayarlarının yorum işaretlerini kaldırın:
 ```python
+# Veritabanı
+# [https://docs.djangoproject.com/en/1.10/ref/settings/#databases](https://docs.djangoproject.com/en/1.10/ref/settings/#databases)
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-# Use settings below for local sqlite file
+# Yerel sqlite dosyası için aşağıdaki ayarları kullanın
 
 # DATABASES = {
 #     'default': {
@@ -137,7 +141,7 @@ exit;
 #     }
 # }
 
-# Use settings below for MySQL server (requires python-mysql)
+# MySQL sunucusu için aşağıdaki ayarları kullanın (python-mysql gerektirir)
 
 DATABASES = {
     'default': {
@@ -149,24 +153,24 @@ DATABASES = {
         'PORT': '',
     }
 }
-```
+```[cite: 1]
 
-### Using a production web server
-It is highly recommended to use a 'real' web server for running offermanager. This example uses apache, however any wsgi-compatible server will work.
+### Canlı Ortam (Production) Web Sunucusu Kullanımı
+offermanager'ı çalıştırmak için "gerçek" bir web sunucusu kullanmanız şiddetle tavsiye edilir. Bu örnekte Apache kullanılmaktadır ancak WSGI uyumlu herhangi bir sunucu da işinizi görecektir.[cite: 1]
 
-1. Install apache and wsgi module
+1. Apache ve WSGI modülünü yükleyin:
 ```bash
 $ sudo apt-get install apache2 libapache2-mod-wsgi-py3
 $ sudo a2enmod wsgi
-```
+```[cite: 1]
 
-2. Edit apache config to use wsgi.py included with offermanager and include static and attachments directories
+2. Apache yapılandırmasını, offermanager ile birlikte gelen `wsgi.py` dosyasını kullanacak ve statik ile ek (attachments) dizinlerini dahil edecek şekilde düzenleyin:
 ```bash
 $ sudo nano /etc/apache2/sites-enabled/000-default.conf
-```
+```[cite: 1]
 
 ```apacheconf
-# These lines must be outside of the VirtualHost directive
+# Bu satırlar VirtualHost direktifinin dışında olmalıdır
 WSGIScriptAlias / /opt/offermanager/offermanager/wsgi.py
 WSGIPythonPath /opt/offermanager
 
@@ -188,97 +192,95 @@ WSGIPythonPath /opt/offermanager
                 </Files>
         </Directory>
 
-		# The real location of these directories can be moved if desired.
-        # Remember to update /opt/offermanager/offermanager/settings.py to reflect changes here.
+		# Bu dizinlerin gerçek konumu istenirse değiştirilebilir.
+        # Buradaki değişiklikleri yansıtmak için /opt/offermanager/offermanager/settings.py dosyasını güncellemeyi unutmayın.
         Alias /static /opt/offermanager/offermanager/static
 </VirtualHost>
-```
-3. Restart apache and you should be in business!
+```[cite: 1]
+
+3. Apache'yi yeniden başlattığınızda sisteminiz hazır olacaktır!
 ```bash
 $ sudo service apache2 restart
-```
+```[cite: 1]
 
 ---
 
 ## 🔄 Yıl Sonu Devir İşlemleri (Veri Aktarımı)
 
-Mevcut sistemdeki **Kullanıcı**, **Çalışan**, **Stok** ve **Müşteri** tablolarını, projenin temel yapısını bozmadan yeni
-veritabanına aktarmak için aşağıdaki iki yöntemden biri kullanılabilir.
+Mevcut sistemdeki **Kullanıcı**, **Çalışan**, **Stok** ve **Müşteri** tablolarını, projenin temel yapısını bozmadan yeni veritabanına aktarmak için aşağıdaki iki yöntemden biri kullanılabilir.[cite: 1]
 
 ---
 
 ### Yöntem 1: Yerleşik Django Fixtures (Hızlı / Kodsuz Yöntem)
 
-Herhangi bir kod değişikliği yapmadan, tamamen Django'nun yerleşik `dumpdata` ve `loaddata`
-mekanizmasını kullanan pratik yöntemdir.
+Herhangi bir kod değişikliği yapmadan, tamamen Django'nun yerleşik `dumpdata` ve `loaddata` mekanizmasını kullanan pratik yöntemdir.[cite: 1]
 
 #### 1. Verileri Dışarı Aktarma (Eski/Dolu Veritabanında)
-Eski veritabanınız aktifken terminalde aşağıdaki komutu çalıştırarak stok ve müşteri
-verilerini JSON formatında yedekleyin:
+Eski veritabanınız aktifken terminalde aşağıdaki komutu çalıştırarak stok ve müşteri verilerini JSON formatında yedekleyin:
 
 ```bash
-python manage.py dumpdata auth.user offermanager.employee offermanager.OfferStock offermanager.Customer -o devir_verisi.json --indent 4
-```
+python manage.py dumpdata auth.user offermanager.employee offermanager.OfferStock offermanager.Customer --indent 4 -o devir_verisi.json
+```[cite: 1]
 
 #### 2. Verileri İçe Aktarma (Yeni/Boş Veritabanında)
 Yeni veritabanına geçiş yapıp "python manage.py migrate" çalıştırdıktan sonra verileri doğrudan içeri yükleyin:
 
 ```bash
 python manage.py loaddata devir_verisi.json
-```
+```[cite: 1]
+
 ---
 
 ### Yöntem 2: Özel Yönetim Komutları (Custom Management Commands)
-Proje içine gömülü, veritabanı kısıtlamalarını (Foreign Key denetimlerini) geçici olarak bypass ederek
-verileri esnek bir şekilde içeri basan yöntemdir.
+Proje içine gömülü, veritabanı kısıtlamalarını (Foreign Key denetimlerini) geçici olarak bypass ederek verileri esnek bir şekilde içeri basan yöntemdir.[cite: 1]
 
 #### Eski Veritabanında Dışa Aktarma:
 Terminalde tek bir komutla ilgili tabloları **devir_verisi.json** adıyla dışarı aktarın:
 
 ```bash
 python manage.py devir_export
-```
+```[cite: 1]
 
 #### Yeni Veritabanında İçe Aktarma:
 Yeni veritabanına geçip migrate işlemlerini tamamladıktan sonra verileri direkt içeri basmak için:
 
 ```bash
 python manage.py devir_import
-```
+```[cite: 1]
+
 ---
 
 ## 🔄 Django dumpdata ve loaddata ile yedekleme (backup.bat/backup.sh):
 
-Verileri Windows ortamından, Linux ortamına aktarırken Türkçe
-karakterlerin bozulmaması için **UTF8** karakter kodlamasını
-"-Xutf8" parametresi ile çağırılmalıdır.
+Verileri Windows ortamından, Linux ortamına aktarırken Türkçe karakterlerin bozulmaması için **-Xutf8** parametresi ile **UTF8** karakter kodlaması seçilmelidir.[cite: 1]
 
-Boş veritabanına geri yükleme yaparken, veri çakışmalarını ve hataları 
-önlemek için **--exclude** parametresi ile **contenttypes** ve 
-**auth.Permission** tablolarını hariç tutulmalıdır.
+Boş veritabanına geri yükleme yaparken, veri çakışmalarını ve hataları önlemek için de **--exclude** parametresi ile **contenttypes** ve **auth.Permission** tabloları hariç tutulmalıdır.[cite: 1]
 
 ### Windows ortamında:
 
 ```bash
 python -Xutf8 manage.py dumpdata --exclude contenttypes --exclude auth.Permission --format json --indent 4 -o database_backup.json
-```
+```[cite: 1]
+
 ```bash
 .\backup.bat
-```
+```[cite: 1]
 
 ### Linux ortamında:
 
 ```bash
 python manage.py dumpdata --exclude contenttypes --exclude auth.Permission --indent 4 -o database_backup.json
-```
+```[cite: 1]
+
 ```bash
 bash backup.sh
-```
+```[cite: 1]
+
 ---
 
 ### Geri yükleme:
 
 ```bash
 python manage.py loaddata database_backup.json
-```
+```[cite: 1]
 ---

@@ -167,7 +167,7 @@ class OfferItem(models.Model):
     UnitType = models.TextChoices('UnitType', 'AD PK KT TK GR KG ML CL LT MM CM MT KM M2 M3')
     offer = models.ForeignKey(Offer,
                               on_delete=models.CASCADE)
-    type = models.CharField(_('Type'), max_length=64)
+    type = models.CharField(_('Type'), max_length=100)
     unit = models.TextField(_('Unit'),
                             max_length=2,
                             blank=True,
@@ -244,7 +244,7 @@ class DocumentAttachment(models.Model):
 	document = models.ForeignKey(Document, on_delete=models.CASCADE)
 
 class OfferStock(models.Model):
-    type = models.CharField(_('Stock Name'), max_length=200)
+    type = models.CharField(_('Stock Name'), max_length=100, unique=True)
 
     def __str__(self):
         return self.type
