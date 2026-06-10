@@ -88,8 +88,9 @@ Waitress ile çalıştırmak için (Windows için en iyi alternatif):
 python manage.py collectstatic --noinput
 ```
 ```bash
-waitress-serve --port=8000 offermanager.wsgi:application
+waitress-serve --port=8000 --threads=16 --connection-limit=200 offermanager.wsgi:application
 ```
+
 10. ALLOWED_HOSTS Ayarı:
 ```settings.py
 ALLOWED_HOSTS = ['127.0.0.1','localhost',]
