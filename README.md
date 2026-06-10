@@ -56,11 +56,13 @@ python manage.py migrate
 ```bash
 python manage.py createsuperuser
 ```
+```text
 Username (leave blank to use 'root'): admin
 Email address: admin@home.local
 Password:
 Password (again):
 Superuser created successfully.
+```
 
 8. Bu aşamada, uygulamayı Python'un geliştirme sunucusuyla çalıştırmak için yeterli yapılandırmaya sahip olmalısınız. Aşağıdaki komutu çalıştırın ve tarayıcınızdan http://localhost:8000 adresine gidin:
 ```bash
