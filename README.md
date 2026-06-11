@@ -1,9 +1,13 @@
 # offermanager
 Python (Django) teklif ve müşteri yönetim uygulaması
 
+---
+
 ### Gereksinimler
 * pip (Python paketlerini yüklemek için)
 * django
+
+---
 
 ### Temel Kurulum
 * Bu kılavuz, işletim sistemi olarak Debian/Ubuntu kullanıldığını varsayar. Yönetici yetkileri **sudo** kullanılarak alınır.
@@ -41,6 +45,28 @@ SECRET_KEY = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()<>{}'
 # Sistem saatiyle eşleşecek şekilde ayarlayın
 TIME_ZONE = 'UTC'
 ```
+
+### Güvenlik açısından en iyisi:
+**SECRET_KEY** güvenlik anahtarını kendi makinenizde taze olarak üretmektir!
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+**settings.py** dosyasının yanına **.env** adında bir dosya oluşturursunuz (Başında nokta var, uzantısı yok).
+İçine anahtarınızı yazarsınız:
+```plaintext
+# .env dosyasının içi
+DJANGO_SECRET_KEY=&k^9#v!4$p@7(m*2)...
+```
+settings.py dosyanızın içini ise bu dosyadan okuyacak şekilde değiştirirsiniz (örneğin django-environ veya python-dotenv kütüphanesi kullanarak):
+```python
+# settings.py içi
+import os
+from dotenv import load_dotenv
+
+load_dotenv() # .env dosyasını yükler
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+```
+**Özetle:** **SECRET_KEY** aslında **settings.py** içinde bir koddur. Ama en doğru pratik, onu settings.py yanındaki bir **.env** dosyasında gizlemektir.
 
 6. Uygulama veritabanını oluşturun:
 ```bash
@@ -97,6 +123,8 @@ ALLOWED_HOSTS = ['127.0.0.1','localhost',]
 ALLOWED_HOSTS += ['192.168.1.{}'.format(i) for i in range(256)]
 #ALLOWED_HOSTS += ['192.168.{}.{}'.format(i,j) for i in range(256) for j in range(256)]
 ```
+---
+
 ### SQLite3 Yerine MySQL Kullanımı
 1. MySQL istemcisini ve Python MySQL sürücüsünü yükleyin:
 ```bash
@@ -143,6 +171,7 @@ DATABASES = {
     }
 }
 ```
+---
 
 ### Canlı Ortam (Production) Web Sunucusu Kullanımı
 offermanager'ı çalıştırmak için "gerçek" bir web sunucusu kullanmanız şiddetle tavsiye edilir. Bu örnekte Apache kullanılmaktadır ancak WSGI uyumlu herhangi bir sunucu da işinizi görecektir.
@@ -188,6 +217,7 @@ WSGIPythonPath /opt/offermanager
 ```bash
 $ sudo service apache2 restart
 ```
+
 ---
 
 ## 🔄 Yıl Sonu Devir İşlemleri (Veri Aktarımı)
