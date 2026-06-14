@@ -292,4 +292,4 @@ python manage.py loaddata database_backup.json
 ```
 ---
 
-![Proje Görünümü](https://github.com/42htuna/offermanager/blob/master/offermanager/static/offer.png)
+![Proje Görünümü](https://github.com/42htuna/offermanager/blob/master/offermanager/static/images/offer.png)
