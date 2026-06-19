@@ -302,7 +302,7 @@ python manage.py loaddata devir_verisi.json
 
 Proje içine gömülü, veritabanı kısıtlamalarını (Foreign Key denetimlerini) geçici olarak bypass ederek verileri esnek bir şekilde içeri basan yöntemdir.
 
-#### 1. Kaynak veritabanından dışarı aktarma
+#### 1. Verileri dışarı aktarma (Eski/Dolu Veritabanında)
 
 Terminalde tek bir komutla ilgili tabloları **devir_verisi.json** adıyla dışarı aktarın.
 
@@ -310,7 +310,7 @@ Terminalde tek bir komutla ilgili tabloları **devir_verisi.json** adıyla dış
 python manage.py devir_export
 ```
 
-#### 2. Hedef veritabanına geri yükleme
+#### 2. Verileri içe aktarma (Yeni/Boş Veritabanında)
 
 Yeni veritabanına geçip migrate işlemlerini tamamladıktan sonra verileri direkt içeri basmak için:
 
