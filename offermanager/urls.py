@@ -13,41 +13,35 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.contrib import admin
-from django.urls import path
-from django.conf.urls import include
-from offermanager import views
 from django.conf import settings
-from django.views.static import serve
-from django.urls import path, re_path
+from django.conf.urls import include
+from django.contrib import admin
+from django.urls import include, path, re_path
 from django.views.generic.base import RedirectView
+from django.views.static import serve
+
+from offermanager import views
 
 app_name = "offermanager"
 
 urlpatterns = [
-    
-    # # # DEFAULT
+
     path('', views.index, name='index'),
 
-    # # # LANGUAGES
     path('i18n/', include('django.conf.urls.i18n')),
 
-    # # # ADMIN
     path('admin/', admin.site.urls),
     path('admin/', views.users, name='admin'),
 
-    # # # USER AUTHENTICATION
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
 
-    # # # CUSTOMERS
     path('customers/', views.customer_list, name='customer_list'),
     path('customer/<int:customer_id>/', views.customer, name='customer'),
     path('customer/new/', views.new_customer, name='new_customer'),
     path('customer/<int:customer_id>/update/', views.update_customer, name='update_customer'),
     path('customer/<int:customer_id>/delete/', views.delete_customer, name='delete_customer'),
 
-    # # # OFFERS
     path('offer/all/', views.all_offers, name='all_offers'),
     path('offer/draft/', views.draft_offers, name='draft_offers'),
     path('offer/approved/', views.approved_offers, name='approved_offers'),
@@ -62,14 +56,11 @@ urlpatterns = [
     path('offer/<int:offer_id>/print/', views.print_offer, name='print_offer'),
     path('offer/<int:offer_id>/print/withoutlogo/', views.print_offer_withoutlogo, name='print_offer_withoutlogo'),
 
-    # # # ITEMS
     path('offer/<int:offer_id>/item/add/', views.add_item, name='add_item'),
     path('offer/<int:offer_id>/item/<int:offeritem_id>/delete/', views.delete_item, name='delete_item'),
 
-    # # # REPORTS
     path('accounting/', views.accounting, name='accounting'),
-    
-    # # # DOCUMENTS
+
     path('document/recent/', views.recent_documents, name='recent_documents'),
     path('document/all/', views.all_documents, name='all_documents'),
     path('document/cheque/', views.cheques, name='cheques'),
@@ -80,8 +71,7 @@ urlpatterns = [
     path('document/new/', views.new_document, name='new_document'),
     path('document/<int:document_id>/update/', views.update_document, name='update_document'),
     path('document/<int:document_id>/delete/', views.delete_document, name='delete_document'),
-    
-    # # # ATTACHMENTS
+
     path('document/<int:document_id>/attachments/add/', views.upload_document_attachment, name='upload_document_attachment'),
     path('document/<int:document_id>/attachments/<int:documentattachment_id>/delete/', views.delete_document_attachment, name='delete_document_attachment'),
 ]

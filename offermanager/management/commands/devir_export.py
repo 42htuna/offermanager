@@ -1,7 +1,9 @@
 import json
-from django.core.management.base import BaseCommand
-from django.core import serializers
+
 from django.contrib.auth.models import User
+from django.core import serializers
+from django.core.management.base import BaseCommand
+
 from offermanager.models import Employee, OfferStock, Customer
 
 class Command(BaseCommand):
@@ -29,7 +31,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING("💥 Aktarılacak hiç veri bulunamadı!"))
             return
 
-        # Tüm listeleri tek bir fixture dizisinde birleştirip JSON'a çeviriyoruz
         tum_veriler = users + employees + offer_stocks + customers
         data = serializers.serialize("json", tum_veriler, indent=4)
         

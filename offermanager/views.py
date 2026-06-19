@@ -1,21 +1,28 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+import datetime
+import os
+import time
+
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from offermanager.models import Customer, Offer, OfferItem, Document, DocumentAttachment, OfferStock
-import datetime, time, os
-from django.contrib import messages
 
-# Create your views here.
+from offermanager.models import (
+    Customer,
+    Document,
+    DocumentAttachment,
+    Offer,
+    OfferItem,
+    OfferStock,
+)
 
-# Administrative settings
 def users(request):
     return None
 
-# User login
 def login_view(request):
 	if request.method == 'POST':
 		username = request.POST['username']
@@ -30,19 +37,16 @@ def login_view(request):
 	else:
 		return render(request, 'login.html')
 
-# User logout
 def logout_view(request):
 	logout(request)
 	return HttpResponseRedirect('/')
 
-# List all customers
 @login_required(login_url='login/')
 def customer_list(request):
 	customers = Customer.objects.order_by('id')
 	context = {'title' : _('Customer List'), 'customers' : customers,}
 	return render(request, 'customers.html', context)
 
-# Show specific customer details
 @login_required(login_url='login/')
 def customer(request, customer_id):
 	customer = get_object_or_404(Customer, pk=customer_id)
@@ -54,7 +58,6 @@ def customer(request, customer_id):
                'documents' : documents,}
 	return render(request, 'customer.html', context)
 
-# Add new customer
 @login_required(login_url='login/')
 def new_customer(request):
     if request.method == 'POST':
@@ -88,7 +91,6 @@ def new_customer(request):
     else:
         return render(request, 'new_customer.html')
 
-# Update customer
 @login_required(login_url='login/')
 def update_customer(request, customer_id):
     c = get_object_or_404(Customer, pk=customer_id)
@@ -113,7 +115,6 @@ def update_customer(request, customer_id):
         
         return HttpResponseRedirect(reverse('customer', args=(c.id,)))
 
-# Delete customer
 @login_required(login_url='login/')
 def delete_customer(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
@@ -126,49 +127,42 @@ def delete_customer(request, customer_id):
         return render(request, 'customer.html', context)
     return HttpResponseRedirect(reverse('customer_list'))
 
-# Default offer list, show 25 recent offers
 @login_required(login_url='login/')
 def index(request):
     offers = Offer.objects.filter(created_by=request.user, active=1).order_by('-date')[:25]
     context = {'title' : _('Recent Offers'), 'offer_list' : offers,}
     return render(request, 'index.html', context)
 
-# Show big list of all offers
 @login_required(login_url='login/')
 def all_offers(request):
     offers = Offer.objects.filter(created_by=request.user, active=1).order_by('-date')
     context = {'title' : _('All Offers'), 'offer_list' : offers,}
     return render(request, 'index.html', context)
 
-# Show draft offers
 @login_required(login_url='login/')
 def draft_offers(request):
     offers = Offer.objects.filter(created_by=request.user, active=1, status='0').order_by('-date')
     context = {'title' : _('Draft Offers'), 'offer_list' : offers,}
     return render(request, 'index.html', context)
 
-# Show approved offers
 @login_required(login_url='login/')
 def approved_offers(request):
     offers = Offer.objects.filter(created_by=request.user, active=1, status='1').order_by('-date')
     context = {'title' : _('Approved Offers'), 'offer_list' : offers,}
     return render(request, 'index.html', context)
 
-# Show unapproved offers
 @login_required(login_url='login/')
 def unapproved_offers(request):
     offers = Offer.objects.filter(created_by=request.user, active=1, status='2').order_by('-date')
     context = {'title' : _('Unapproved Offers'), 'offer_list' : offers,}
     return render(request, 'index.html', context)
 
-# Show cancel offers
 @login_required(login_url='login/')
 def canceled_offers(request):
     offers = Offer.objects.filter(created_by=request.user, active=1, status='3').order_by('-date')
     context = {'title' : _('Canceled Offers'), 'offer_list' : offers,}
     return render(request, 'index.html', context)
 
-# Display a specific offer
 @login_required(login_url='login/')
 def offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
@@ -180,7 +174,6 @@ def offer(request, offer_id):
     }
     return render(request, 'offer.html', context)
 
-# Search for offer
 @login_required(login_url='login/')
 def search_offer(request):
     offer_id = request.POST['id']
@@ -194,10 +187,8 @@ def search_offer(request):
     else:
         return render(request, 'print_offer.html')
 
-# Create new offer
 @login_required(login_url='login/')
 def new_offer(request):
-	# If no customer_id is defined, create a new offer
 	if request.method == 'POST':
 		customer_id = request.POST['customer_id']
 		if customer_id == 'None':
@@ -212,12 +203,10 @@ def new_offer(request):
 			i.save()
 			return HttpResponseRedirect(reverse('offer', args=(i.id,)))
 	else:
-		# Customer list needed to populate select field
 		customers = Customer.objects.order_by('name')
 		context = {'title' : _('New Offer'), 'customer_list' : customers,}
 		return render(request, 'new_offer.html', context)
 
-# Update offer
 @login_required(login_url='login/')
 def update_offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
@@ -234,14 +223,12 @@ def update_offer(request, offer_id):
         #return render(request, 'offer.html', context) # Popup menu active
         return HttpResponseRedirect(reverse('offer', args=(offer.id,)))
 
-# Delete an offer
 @login_required(login_url='login/')
 def delete_offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
     offer.delete()
     return HttpResponseRedirect(reverse('index'))
 
-# Passive Offer
 @login_required(login_url='login/')
 def passive_offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
@@ -249,21 +236,18 @@ def passive_offer(request, offer_id):
     offer.save()
     return HttpResponseRedirect(reverse('index'))
 
-# Print offer
 @login_required(login_url='login/')
 def print_offer(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
     context = {'title' : _('Offer ') + str(offer_id), 'offer' : offer,}
     return render(request, 'print_offer.html', context)
 
-# Print offer with logo
 @login_required(login_url='login/')
 def print_offer_withoutlogo(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user, active=1)
     context = {'title' : _('Offer ') + str(offer_id), 'offer' : offer,}
     return render(request, 'print_offer_withoutlogo.html', context)
 
-# Add offeritem to offer
 @login_required(login_url='login/')
 def add_item(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id, created_by=request.user)
@@ -285,7 +269,6 @@ def add_item(request, offer_id):
     else:
         return HttpResponseRedirect(reverse('offer', args=(offer.id,)))
 
-# Delete offeritem from offer
 @login_required(login_url='login/')
 def delete_item(request, offeritem_id, offer_id):
 	item = get_object_or_404(OfferItem, pk=offeritem_id)
@@ -298,7 +281,6 @@ def delete_item(request, offeritem_id, offer_id):
 	else:
 		return HttpResponseRedirect(reverse('offer', args=(offer.id,)))
 
-# Accounting report
 @login_required(login_url='login/')
 def accounting(request):
 	if request.method == 'POST':
@@ -310,7 +292,6 @@ def accounting(request):
 		else:
 			approvedoffers = Offer.objects.filter(date__gt=start).filter(date__lt=end).filter(status = '1', created_by=request.user, active=1)
 			alloffers = Offer.objects.filter(date__gt=start).filter(date__lt=end).filter(created_by=request.user, active=1)
-			# Sum of all approved offers
 			offertotal = 0
 			for i in approvedoffers:
 				if i.active == True:
@@ -320,59 +301,50 @@ def accounting(request):
 	else:
 		return render(request, 'accounting.html')
 
-# Default document list, show 25 recent documents
 @login_required(login_url='login/')
 def recent_documents(request):
     documents = Document.objects.filter(created_by=request.user).order_by('-date')[:25]
     context = {'title' : _('Recent Documents'), 'document_list' : documents,}
     return render(request, 'documents.html', context)
 
-# Show big list of all documents
 @login_required(login_url='login/')
 def all_documents(request):
     documents = Document.objects.filter(created_by=request.user).order_by('-date')
     context = {'title' : _('All Documents'), 'document_list' : documents,}
     return render(request, 'documents.html', context)
 
-# Show cheques
 @login_required(login_url='login/')
 def cheques(request):
     documents = Document.objects.filter(created_by=request.user, documenttype='0').order_by('-date')
     context = {'title' : _('Cheques'), 'document_list' : documents,}
     return render(request, 'documents.html', context)
 
-# Show bonds
 @login_required(login_url='login/')
 def bonds(request):
     documents = Document.objects.filter(created_by=request.user, documenttype='1').order_by('-date')
     context = {'title' : _('Bonds'), 'document_list' : documents,}
     return render(request, 'documents.html', context)
 
-# Show receipts
 @login_required(login_url='login/')
 def receipts(request):
     documents = Document.objects.filter(created_by=request.user, documenttype='2').order_by('-date')
     context = {'title' : _('Receipts'), 'document_list' : documents,}
     return render(request, 'documents.html', context)
 
-# Show others
 @login_required(login_url='login/')
 def others(request):
     documents = Document.objects.filter(created_by=request.user, documenttype='3').order_by('-date')
     context = {'title' : _('Others'), 'document_list' : documents,}
     return render(request, 'documents.html', context)
 
-# Display a specific document
 @login_required(login_url='login/')
 def document(request, document_id):
     document = get_object_or_404(Document, pk=document_id, created_by=request.user)
     context = {'title' : _('Document ') + str(document_id), 'document' : document,}
     return render(request, 'document.html', context)
 
-# Create new document
 @login_required(login_url='login/')
 def new_document(request):
-	# If no customer_id is defined, create a new document
 	if request.method == 'POST':
 		customer_id = request.POST['customer_id']
 		if customer_id == 'None':
@@ -387,12 +359,10 @@ def new_document(request):
 			i.save()
 			return HttpResponseRedirect(reverse('document', args=(i.id,)))
 	else:
-		# Customer list needed to populate select field
 		customers = Customer.objects.order_by('name')
 		context = {'title' : _('New Document'), 'customer_list' : customers,}
 		return render(request, 'new_document.html', context)
 
-# Update document
 @login_required(login_url='login/')
 def update_document(request, document_id):
     document = get_object_or_404(Document, pk=document_id, created_by=request.user)
@@ -414,7 +384,6 @@ def update_document(request, document_id):
                    'document' : document,}
         return render(request, 'document.html', context)
 
-# Delete an document
 @login_required(login_url='login/')
 def delete_document(request, document_id):
     document = get_object_or_404(Document, pk=document_id, created_by=request.user)
@@ -427,7 +396,6 @@ def delete_document(request, document_id):
     document.delete()
     return HttpResponseRedirect(reverse('recent_documents'))
 
-# Upload attachment for document
 @login_required(login_url='login/')
 def upload_document_attachment(request, document_id):
     myfile = request.FILES['file']
@@ -447,7 +415,6 @@ def upload_document_attachment(request, document_id):
                 f.write(z)
     return HttpResponseRedirect(reverse('document', args=(document.id,)))
 
-# Delete attachment from document
 @login_required(login_url='login/')
 def delete_document_attachment(request, document_id, documentattachment_id):
     documentattachment = get_object_or_404(DocumentAttachment, pk=documentattachment_id)

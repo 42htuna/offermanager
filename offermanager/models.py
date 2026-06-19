@@ -1,11 +1,12 @@
 from __future__ import unicode_literals
-from django.db import models
+
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
+from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
 from offermanager.cevirici import *
 
-# Create your models here.
 STATUS_CHOICES = [('0', _('Draft')),
                   ('1', _('Approved')),
                   ('2', _('Unapproved')),

@@ -1,6 +1,7 @@
 import json
-from django.core.management.base import BaseCommand
+
 from django.core import serializers
+from django.core.management.base import BaseCommand
 from django.db import connection
 
 class Command(BaseCommand):
@@ -16,8 +17,7 @@ class Command(BaseCommand):
             if not data.strip():
                 self.stdout.write(self.style.ERROR('💥 HATA: "devir_verisi.json" dosyasının içi boş!'))
                 return
-                
-            # Foreign Key / Veritabanı kısıtlamalarını geçici olarak kapatıyoruz
+
             with connection.constraint_checks_disabled():
                 count = 0
                 for obj in serializers.deserialize("json", data):
