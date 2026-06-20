@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -8,8 +9,25 @@ from offermanager.models import Employee, OfferStock, Customer
 
 class Command(BaseCommand):
     help = 'Kullanıcı, Çalışan, Stok ve Müşteri verilerini JSON formatında dışarı aktarır.'
+    
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--file',
+            type=str,
+            default='devir_verisi.json',
+            help='Yüklenecek kaynak JSON dosyası'
+        )    
 
     def handle(self, *args, **options):
+        
+        girilen_dosya = Path(options['file'])
+        
+        if girilen_dosya.suffix == '.json':
+            dosya_json = girilen_dosya
+        else:
+            self.stdout.write(self.style.ERROR("💥 Hata: Yalnızca JSON desteklenmektedir!"))
+            return          
+        
         self.stdout.write("Veritabanından veriler çekiliyor...")
         
         users = list(User.objects.all())
@@ -34,7 +52,7 @@ class Command(BaseCommand):
         tum_veriler = users + employees + offer_stocks + customers
         data = serializers.serialize("json", tum_veriler, indent=4)
         
-        with open("devir_verisi.json", "w", encoding="utf-8") as f:
+        with open(dosya_json, "w", encoding="utf-8") as f:
             f.write(data)
             
         self.stdout.write(self.style.SUCCESS(f'\n✅  BAŞARILI: {toplam_kayit} adet kayıt "devir_verisi.json" dosyasına yazıldı.'))        

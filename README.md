@@ -310,12 +310,20 @@ Terminalde tek bir komutla ilgili tabloları **devir_verisi.json** adıyla dış
 python manage.py devir_export
 ```
 
+```bash
+python manage.py devir_export --file ~/yedek.json
+```
+
 #### 2. Verileri içe aktarma (Yeni/Boş Veritabanında)
 
 Yeni veritabanına geçip migrate işlemlerini tamamladıktan sonra verileri direkt içeri basmak için:
 
 ```bash
 python manage.py devir_import
+```
+
+```bash
+python manage.py devir_import --file ~/yedek.json
 ```
 
 ---
