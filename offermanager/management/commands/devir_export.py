@@ -55,4 +55,4 @@ class Command(BaseCommand):
         with open(dosya_json, "w", encoding="utf-8") as f:
             f.write(data)
             
-        self.stdout.write(self.style.SUCCESS(f'\n✅  BAŞARILI: {toplam_kayit} adet kayıt "devir_verisi.json" dosyasına yazıldı.'))        
+        self.stdout.write(self.style.SUCCESS(f'\n✅  BAŞARILI: {toplam_kayit} adet kayıt {dosya_json} dosyasına yazıldı.'))        

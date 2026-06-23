@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 data = f.read()
             
             if not data.strip():
-                self.stdout.write(self.style.ERROR('💥 HATA: "devir_verisi.json" dosyasının içi boş!'))
+                self.stdout.write(self.style.ERROR(f'💥 HATA: {dosya_json} dosyasının içi boş!'))
                 return
 
             with connection.constraint_checks_disabled():
@@ -45,6 +45,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f'\n✅ BAŞARILI: {count} adet kayıt yeni veritabanına sorunsuz aktarıldı!'))
             
         except FileNotFoundError:
-            self.stdout.write(self.style.ERROR('💥 HATA: "devir_verisi.json" dosyası bulunamadı. Önce devir_export komutunu çalıştırın.'))
+            self.stdout.write(self.style.ERROR(f'💥 HATA: {dosya_json} dosyası bulunamadı. Önce devir_export komutunu çalıştırın.'))
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'💥 Beklenmedik bir hata oluştu: {str(e)}'))
