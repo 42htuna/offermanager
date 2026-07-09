@@ -45,7 +45,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change or not obj.created_by:
-            obj.created_by = request.user               
+            obj.created_by = request.user
         obj.updated_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -82,7 +82,7 @@ class OfferAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change or not obj.created_by:
-            obj.created_by = request.user               
+            obj.created_by = request.user
         obj.updated_by = request.user
         super().save_model(request, obj, form, change)
 
@@ -117,7 +117,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change or not obj.created_by:
-            obj.created_by = request.user               
+            obj.created_by = request.user
         obj.updated_by = request.user
         super().save_model(request, obj, form, change)
 
