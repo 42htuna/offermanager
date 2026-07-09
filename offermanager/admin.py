@@ -43,11 +43,11 @@ class CustomerAdmin(admin.ModelAdmin):
                      'phone',
                      'email',]
 
-    def save_model(self, request, obj, *args, **kwargs):
-        if not obj.created_by.id:
-            obj.created_by=request.user
-        obj.updated_by=request.user
-        obj.save()
+    def save_model(self, request, obj, form, change):
+        if not change or not obj.created_by:
+            obj.created_by = request.user               
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 class OfferItemInline(admin.TabularInline):
     model = OfferItem
@@ -80,11 +80,11 @@ class OfferAdmin(admin.ModelAdmin):
                    'updated_at',]
     search_fields = ['id', 'customer__name', 'terms',]
 
-    def save_model(self, request, obj, *args, **kwargs):
-        if not obj.created_by.id:
-            obj.created_by=request.user
-        obj.updated_by=request.user
-        obj.save()
+    def save_model(self, request, obj, form, change):
+        if not change or not obj.created_by:
+            obj.created_by = request.user               
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 class DocumentAttachmentInline(admin.TabularInline):
     model = DocumentAttachment
@@ -115,11 +115,11 @@ class DocumentAdmin(admin.ModelAdmin):
                    'updated_at',]
     search_fields = ['id', 'customer__name', 'amount', 'description',]
 
-    def save_model(self, request, obj, *args, **kwargs):
-        if not obj.created_by.id:
-            obj.created_by=request.user
-        obj.updated_by=request.user
-        obj.save()
+    def save_model(self, request, obj, form, change):
+        if not change or not obj.created_by:
+            obj.created_by = request.user               
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
