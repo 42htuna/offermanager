@@ -10,3 +10,4 @@ log.txt
 devir_verisi.json
 database_backup.json
 *.json
+.idea/

@@ -1,0 +1,14 @@
+services:
+  teklif-service:
+    image: offer:latest
+    container_name: offer
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8081:8000"
+    volumes:
+      - offer:/opt/offermanager/data
+
+volumes:
+  offer:
+    name: offer

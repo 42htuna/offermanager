@@ -150,6 +150,18 @@ python manage.py collectstatic --noinput
 waitress-serve --port=8000 --threads=16 --connection-limit=200 offermanager.wsgi:application
 ```
 
+Dokerize yapmak için:
+
+```bash
+docker compose up --build -d
+```
+
+Hazırda imaj varsa:
+
+```bash
+docker compose up -d
+```
+
 10. ALLOWED_HOSTS Ayarı:
 
 ```settings.py
